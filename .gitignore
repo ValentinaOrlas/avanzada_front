@@ -1,0 +1,25 @@
+# Archivos de dependencias (¡El más importante!)
+/node_modules/
+
+# Salida de compilación
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+
+# IDEs y Editores
+/.vscode/
+/.idea/
+*.swp
+*.itp
+*.patch
+
+# Logs y Cache
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
+.angular/
+
+# Configuración local (opcional pero recomendado)
+.env
+.env.local
