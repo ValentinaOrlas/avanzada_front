@@ -12,11 +12,12 @@
   <div>
   <label>Tipo de Documento:</label>
 <select formControlName="tipoDocumento">
-    <option value="" disabled selected>Seleccione un tipo...</option>
+    <option value="">Seleccione un tipo...</option>
     
     @for (tipo of tiposDocumento; track tipo) {
         <option [value]="tipo">
             {{ tipo }}
+           
         </option>
     }
 </select>
