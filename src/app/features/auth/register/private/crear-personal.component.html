@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h3>Registrar Nuevo Personal Administrativo</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Tipo de Documento</label>
+            <select class="form-select" formControlName="tipoDocumento">
+              @for (tipo of tiposDocumento; track tipo) {
+                <option [value]="tipo">{{ tipo }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Número de Identificación</label>
+            <input type="text" class="form-control" formControlName="identificacion">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nombre Completo</label>
+          <input type="text" class="form-control" formControlName="nombre">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" formControlName="email">
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Cargo / Rol</label>
+            <select class="form-select" formControlName="tipoUsuario">
+              @for (rol of rolesDisponibles; track rol) {
+                <option [value]="rol">{{ rol }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Contraseña Temporal</label>
+            <input type="password" class="form-control" formControlName="password">
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="personalForm.invalid">
+            Crear Usuario Administrativo
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

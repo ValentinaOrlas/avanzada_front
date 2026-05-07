@@ -1,0 +1,80 @@
+/* Contenedor principal para centrar el formulario en la pantalla */
+form {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff; /* Blanco */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid #e0e0e0;
+}
+
+h2 {
+    color: #0056b3; /* Azul Institucional */
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Estilo de los grupos de entrada */
+div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Inputs y Selects */
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box; /* Importante para que el padding no desborde */
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff; /* Azul más claro al enfocar */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Mensajes de error (basado en la pág. 16 de la guía) */
+small {
+    display: block;
+    margin-top: 5px;
+    color: #d93025; /* Rojo para errores (estándar de UX) */
+    font-size: 0.8rem;
+}
+
+/* Botón de Registro */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #0056b3; /* Azul fuerte */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover:not(:disabled) {
+    background-color: #004494; /* Azul más oscuro al pasar el mouse */
+}
+
+button:disabled {
+    background-color: #a0c4ff; /* Azul muy claro cuando está desactivado */
+    cursor: not-allowed;
+    opacity: 0.7;
+}

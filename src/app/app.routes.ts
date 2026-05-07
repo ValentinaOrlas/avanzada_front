@@ -1,13 +1,15 @@
 import { Routes } from '@angular/router';
 import { Inicio } from './componentes/inicio/inicio';
-import { Login } from './componentes/login/login';
-import { Registro } from './componentes/registro/registro';
+import { Login } from './features/auth/login/login';
+import { Registro } from './features/auth/register/public/register.components';
 import { SolicitudLista } from './componentes/solicitud-lista/solicitud-lista';
 import { SolicitudCrear } from './componentes/solicitud-crear/solicitud-crear';
 import { SolicitudDetalle } from './componentes/solicitud-detalle/solicitud-detalle';
 import { UsuarioLista } from './componentes/usuario-lista/usuario-lista';
 import { UsuarioDetalle } from './componentes/usuario-detalle/usuario-detalle';
 import { UsuarioCrear } from './componentes/usuario-crear/usuario-crear';
+import { rolesGuard } from './core/guards/rotes'; 
+import { CrearPersonalComponent } from './features/auth/register/private/crear-personal.component'; // Ajusta la ruta según tu carpeta
 
 
 export const routes: Routes = [
@@ -21,6 +23,12 @@ export const routes: Routes = [
       { path: 'nueva', component: SolicitudCrear },
       { path: ':id', component: SolicitudDetalle },
     ]
+  },
+  { 
+    path: 'admin/crear-personal', 
+    component: CrearPersonalComponent,
+    canActivate: [rolesGuard],
+    data: { roles: ['ADMIN'] } 
   },
   {
     path: 'usuarios',
