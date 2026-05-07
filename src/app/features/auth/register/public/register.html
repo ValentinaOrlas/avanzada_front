@@ -1,0 +1,45 @@
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+  <h2>Registro de Usuario</h2>
+
+  <div>
+    <label>Nombre Completo:</label>
+    <input type="text" formControlName="nombre">
+    @if (registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched) {
+      <small style="color: red;">El nombre es obligatorio</small>
+    }
+  </div>
+
+  <div>
+  <label>Tipo de Documento:</label>
+<select formControlName="tipoDocumento">
+    <option value="">Seleccione un tipo...</option>
+    
+    @for (tipo of tiposDocumento; track tipo) {
+        <option [value]="tipo">
+            {{ tipo }}
+           
+        </option>
+    }
+</select>
+</div>
+
+  <div>
+    <label>Número de Identificación:</label>
+    <input type="text" formControlName="identificacion">
+  </div>
+
+  <div>
+    <label>Correo Electrónico:</label>
+    <input type="email" formControlName="email">
+    @if (registerForm.get('email')?.errors?.['email']) {
+      <small style="color: red;">Formato de correo inválido</small>
+    }
+  </div>
+
+  <div>
+    <label>Contraseña:</label>
+    <input type="password" formControlName="password">
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Registrarme</button>
+</form>

@@ -7,7 +7,8 @@ import { UsuarioDetalle } from './features/usuario/usuario-detalle/usuario-detal
 import { Inicio } from './features/inicio/inicio';
 import { Login } from './features/auth/login/login';
 import { Registro } from './features/auth/registro/registro';
-
+import { CrearPersonalComponent } from './features/auth/register/private/crear-personal.component';
+import { rolesGuard } from './core/guards/rotes';
 
 export const routes: Routes = [
   { path: '', component: Inicio },
@@ -20,6 +21,12 @@ export const routes: Routes = [
       { path: 'nueva', component: SolicitudCrear },
       { path: ':id', component: SolicitudDetalle },
     ]
+  },
+  { 
+    path: 'admin/crear-personal', 
+    component: CrearPersonalComponent,
+    canActivate: [rolesGuard],
+    data: { roles: ['ADMIN'] } 
   },
   {
     path: 'usuarios',
