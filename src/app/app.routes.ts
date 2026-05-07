@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
-import { Inicio } from './componentes/inicio/inicio';
-import { Login } from './componentes/login/login';
-import { Registro } from './componentes/registro/registro';
-import { SolicitudLista } from './componentes/solicitud-lista/solicitud-lista';
-import { SolicitudCrear } from './componentes/solicitud-crear/solicitud-crear';
-import { SolicitudDetalle } from './componentes/solicitud-detalle/solicitud-detalle';
-import { UsuarioLista } from './componentes/usuario-lista/usuario-lista';
-import { UsuarioDetalle } from './componentes/usuario-detalle/usuario-detalle';
-import { UsuarioCrear } from './componentes/usuario-crear/usuario-crear';
+import { SolicitudLista } from './features/solicitudes/solicitud-lista/solicitud-lista';
+import { SolicitudCrear } from './features/solicitudes/solicitud-crear/solicitud-crear';
+import { SolicitudDetalle } from './features/solicitudes/solicitud-detalle/solicitud-detalle';
+import { UsuarioLista } from './features/usuario/usuario-lista/usuario-lista';
+import { UsuarioDetalle } from './features/usuario/usuario-detalle/usuario-detalle';
+import { Inicio } from './features/inicio/inicio';
+import { Login } from './features/auth/login/login';
+import { Registro } from './features/auth/registro/registro';
 
 
 export const routes: Routes = [
@@ -26,7 +25,6 @@ export const routes: Routes = [
     path: 'usuarios',
     children: [
       { path: '', component: UsuarioLista },       // Listado: /usuarios
-      { path: 'nuevo', component: UsuarioCrear },   // Formulario: /usuarios/nuevo
       { path: ':id', component: UsuarioDetalle }    // Ver uno solo: /usuarios/1094...
     ]
   },

@@ -1,0 +1,19 @@
+/* Selector de ID — título principal de la sección */
+#titulo-listado {
+color: #1a237e;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+/* Selector de clase — tarjeta base */
+.solicitud-card {
+transition: box-shadow 0.2s ease;
+}
+/* Combinación de clases — tarjeta en estado crítico */
+.solicitud-card.prioridad-alta {
+border-left: 4px solid #dc3545;
+}
+/* Selector de atributo — inputs del formulario */
+input[type="text"],
+input[type="email"] {
+border-radius: 6px;
+}
