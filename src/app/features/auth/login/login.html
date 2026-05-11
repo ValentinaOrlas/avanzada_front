@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="auth-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
+    <h2 class="auth-title">Iniciar Sesión</h2>
+
+    <div class="form-group">
+      <label class="form-label">Tipo de Documento:</label>
+      <select formControlName="tipoDocumento" class="form-input">
+        <option value="" disabled selected>Seleccione un tipo...</option>
+        @if (tiposDocumento.length > 0) {
+          @for (tipo of tiposDocumento; track tipo) {
+            <option [value]="tipo">{{ tipo }}</option>
+          }
+        } @else {
+          <option value="" disabled>Cargando documentos...</option>
+        }
+      </select>
+      @if (loginForm.get('tipoDocumento')?.invalid && loginForm.get('tipoDocumento')?.touched) {
+        <small class="error-message">El tipo de documento es requerido</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Número de Identificación:</label>
+      <input type="text" formControlName="identificacion" class="form-input" placeholder="Documento">
+      @if (loginForm.get('identificacion')?.invalid && loginForm.get('identificacion')?.touched) {
+        <small class="error-message">Ingrese su identificación</small>
+      }
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Contraseña:</label>
+      <input type="password" formControlName="password" class="form-input" placeholder="********">
+      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <small class="error-message">La contraseña es obligatoria</small>
+      }
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">
+      Ingresar
+    </button>
+
+    <p class="auth-footer">
+      ¿No tienes cuenta? <a routerLink="/registro" class="link-verde">Regístrate aquí</a>
+    </p>
+  </form>
+</div>

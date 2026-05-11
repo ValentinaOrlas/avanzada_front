@@ -11,5 +11,6 @@ export interface DetalleUsuarioResponse {
   identificacion: string;
   nombre: string;
   email: string;
-  // ... otros campos que devuelva tu mapper
+  tipoUsuario: 'ESTUDIANTE' | 'DOCENTE' | 'ADMINISTRATIVO' | 'BIENESTAR'; 
+  activo: boolean;
 }

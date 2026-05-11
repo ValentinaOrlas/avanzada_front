@@ -1,0 +1,98 @@
+/* Contenedor con fondo suave */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background-color: #f4f7f6; /* Blanco grisáceo */
+}
+
+/* Tarjeta de Login */
+.auth-form {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 420px;
+  border-top: 5px solid #2e7d32; /* Verde medio-oscuro */
+}
+
+.auth-title {
+  text-align: center;
+  color: #1a237e; /* Azul oscuro */
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  box-sizing: border-box; /* Para que el padding no rompa el ancho */
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #2e7d32; /* Verde al enfocar */
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+/* Botón con el Azul y Hover Verde */
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background-color: #1a237e; /* Azul */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #2e7d32; /* Cambio a Verde al pasar el mouse */
+}
+
+.btn-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.link-verde {
+  color: #2e7d32;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.link-verde:hover {
+  text-decoration: underline;
+}

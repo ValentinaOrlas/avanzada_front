@@ -1,0 +1,87 @@
+/* usuario-detalle.css */
+.main-container {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.bg-azul {
+    background-color: #004c92; /* Azul principal */
+}
+
+.text-blanco {
+    color: #ffffff;
+}
+
+.card-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.data-row {
+    margin-bottom: 20px;
+}
+
+.data-row label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.data-row p {
+    margin: 5px 0 0;
+    font-size: 1.1rem;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.text-verde {
+    color: #28a745; /* Verde para roles/acentos */
+}
+
+.badge-verde {
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.bold { font-weight: bold; }
+
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.btn-primary {
+    background: #004c92;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #28a745; /* Cambio de azul a verde en hover */
+}

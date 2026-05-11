@@ -1,1 +1,43 @@
-<p>usuario-detalle works!</p>
+<div class="main-container">
+  <div *ngIf="cargando" class="loader">
+    <p>Cargando información...</p>
+  </div>
+
+  <div *ngIf="!cargando && usuario" class="profile-card">
+    <div class="card-header bg-azul">
+      <h2 class="text-blanco">Mi Perfil</h2>
+      <span class="badge" [ngClass]="usuario.activo ? 'badge-verde' : 'badge-rojo'">
+        {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+      </span>
+    </div>
+
+    <div class="card-body">
+      <div class="data-row">
+        <label>Nombre Completo</label>
+        <p>{{ usuario.nombre }}</p>
+      </div>
+
+      <div class="grid-2-col">
+        <div class="data-row">
+          <label>Identificación</label>
+          <p>{{ usuario.identificacion }}</p>
+        </div>
+        <div class="data-row">
+          <label>Rol de Usuario</label>
+          <p class="text-verde bold">{{ usuario.tipoUsuario }}</p>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <label>Correo Institucional</label>
+        <p>{{ usuario.email }}</p>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-primary">Editar Datos</button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error-box">No se pudo cargar la información. Verifica tu sesión.</div>
+</div>

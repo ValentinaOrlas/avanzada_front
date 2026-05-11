@@ -17,11 +17,16 @@ export class UsuarioService {
     return this.http.post<DetalleUsuarioResponse>(`${this.API_URL}/admin/crear-personal`, usuario);
   }
 
-getTiposDocumento(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.API_URL}/tipos-documento`);
-}
+  getTiposDocumento(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.API_URL}/tipos-documento`);
+  }
 
-getRoles(): Observable<string[]> {
+  getRoles(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/roles`);
+  }
+
+  obtenerDetallePropio(): Observable<DetalleUsuarioResponse> {
+
+    return this.http.get<DetalleUsuarioResponse>(`${this.API_URL}/me`);
   }
 }

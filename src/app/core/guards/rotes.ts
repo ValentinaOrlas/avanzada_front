@@ -17,6 +17,13 @@ export const rolesGuard: CanActivateFn = (route, state) => {
     const decoded: any = jwtDecode(token);
     const userRole = decoded.rol; // O el nombre que le hayas puesto en Java
 
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+      localStorage.removeItem('token'); // Limpiamos token viejo
+      router.navigate(['/login']);
+      return false;
+    }
+    
     // Obtenemos los roles permitidos para esta ruta desde la configuración de rutas
     const expectedRoles: string[] = route.data['roles'];
 
