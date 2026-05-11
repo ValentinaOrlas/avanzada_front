@@ -21,6 +21,10 @@ getTiposDocumento(): Observable<string[]> {
   return this.http.get<string[]>(`${this.API_URL}/tipos-documento`);
 }
 
+login(datos: any): Observable<any> {
+  return this.http.post(`${this.API_URL}/auth/login`, datos);
+}
+
 getRoles(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/roles`);
   }

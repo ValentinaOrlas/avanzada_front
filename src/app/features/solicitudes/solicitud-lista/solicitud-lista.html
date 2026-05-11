@@ -1,0 +1,65 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="text-primary fw-bold mb-0">Mis Solicitudes</h2>
+      <p class="text-muted small">Gestiona y consulta el estado de tus PQRS</p>
+    </div>
+    <button class="btn btn-primary shadow-sm fw-bold" routerLink="/solicitudes/nueva">
+      + CREAR NUEVA PQRS
+    </button>
+  </div>
+
+  @if (cargando) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  } @else {
+    
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="ps-4">Referencia</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Prioridad</th>
+              <th class="text-end pe-4">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of solicitudes; track s.id) {
+              <tr>
+                <td class="ps-4 fw-bold text-dark">#{{ s.id.slice(0,8) }}</td>
+                <td>{{ s.descripcion | slice:0:60 }}...</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bg-warning text-dark': s.estado === 'REGISTRADA',
+                    'bg-info': s.estado === 'CLASIFICADA',
+                    'bg-primary': s.estado === 'EN_ATENCION',
+                    'bg-success': s.estado === 'ATENDIDA',
+                    'bg-secondary': s.estado === 'CERRADA'
+                  }">{{ s.estado }}</span>
+                </td>
+                <td>
+                  <span class="small fw-medium">{{ s.prioridad || 'Por definir' }}</span>
+                </td>
+                <td class="text-end pe-4">
+                  <button class="btn btn-sm btn-outline-primary" [routerLink]="['/solicitudes', s.id]">
+                    Ver Detalle
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="text-center py-5 text-muted">
+                  No tienes solicitudes registradas actualmente.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

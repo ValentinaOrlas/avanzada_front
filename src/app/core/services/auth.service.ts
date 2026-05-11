@@ -13,14 +13,16 @@ export class AuthService {
   // 2. URL de tu API en Spring Boot
   private readonly API_URL = 'http://localhost:8080/api/auth';
 
-  // 3. Método de Login (Guía Pág. 30)
+
   login(credentials: LoginRequest): Observable<TokenResponse> {
-    return this.http.post<TokenResponse>(`${this.API_URL}/login`, credentials).pipe(
-      tap(response => {
-        localStorage.setItem('token', response.token);
-      })
-    );
-  }
+  return this.http.post<TokenResponse>(`${this.API_URL}/login`, credentials).pipe(
+    tap(response => {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('rol', response.tipoUsuario);
+      localStorage.setItem('nombre', response.nombre);
+    })
+  );
+}
 
   // Métodos de apoyo recomendados
   logout(): void {

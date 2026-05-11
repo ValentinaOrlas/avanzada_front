@@ -7,4 +7,6 @@ export interface LoginRequest {
 
 export interface TokenResponse {
   token: string;
+  tipoUsuario: string;
+  nombre: string;
 }
