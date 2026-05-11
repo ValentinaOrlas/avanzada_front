@@ -1,1 +1,67 @@
+<<<<<<< HEAD
 <p>solicitud-crear works!</p>
+=======
+<div class="card flex justify-content-center">
+    <p-card header="Crear Nueva Solicitud" [style]="{ width: '100%' }">
+        <form [formGroup]="solicitudForm" (ngSubmit)="onSubmit()">
+            
+            <div class="field">
+                <label for="tipo">Tipo de Trámite</label>
+                <p-select 
+                    id="tipo"
+                    [options]="tipos" 
+                    formControlName="tipo" 
+                    optionLabel="label" 
+                    optionValue="value"
+                    placeholder="Seleccione un trámite"
+                    styleClass="w-full">
+                </p-select>
+            </div>
+
+            <div class="field mt-3">
+                <label for="descripcion">Descripción (Mínimo 20 caracteres)</label>
+                <textarea 
+                    id="descripcion"
+                    pTextarea 
+                    formControlName="descripcion" 
+                    rows="5" 
+                    class="w-full"
+                    placeholder="Detalle su solicitud aquí...">
+                </textarea>
+            </div>
+
+            <div class="flex justify-content-end mt-4">
+                <p-button 
+                    label="Enviar Solicitud" 
+                    icon="pi pi-check" 
+                    [disabled]="solicitudForm.invalid"
+                    type="submit">
+                </p-button>
+            </div>
+        </form>
+    </p-card>
+</div>
+
+<div class="mt-5">
+    <p-table [value]="solicitudes" [rows]="5" [paginator]="true" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-s>
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.descripcion }}</td>
+                <td>{{ s.tipo }}</td>
+                <td>
+                    <p-tag [value]="s.estado" [severity]="s.estado === 'ABIERTA' ? 'success' : 'info'"></p-tag>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+>>>>>>> ccaa7e57a33e34a490597d864e40aa936a499109

@@ -1,0 +1,78 @@
+/* Estilo de los Inputs Minimalistas */
+.custom-select {
+  border: none;
+  border-bottom: 2px solid #e9ecef;
+  border-radius: 0;
+  padding: 0.8rem 0;
+  font-size: 1.1rem;
+  box-shadow: none !important;
+}
+
+.custom-select:focus {
+  border-color: #0056b3;
+}
+
+.custom-area {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-height: 250px;
+  resize: none;
+}
+
+.custom-area:focus {
+  background-color: #fff;
+  border-color: #0056b3;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Botones de Prioridad Estilo Chip */
+.btn-priority {
+  border: 1px solid #dee2e6;
+  background: white;
+  color: #495057;
+  font-weight: 600;
+  padding: 0.6rem;
+  transition: all 0.2s;
+  border-radius: 10px;
+}
+
+.btn-priority:hover {
+  border-color: #0056b3;
+  color: #0056b3;
+}
+
+.btn-priority.active {
+  background-color: #0056b3;
+  color: white;
+  border-color: #0056b3;
+}
+
+/* Info Box */
+.canal-info {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+/* Botón de Radicar */
+.btn-save {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Estilo de la Tabla */
+.table thead th {
+  font-weight: 700;
+  color: #64748b;
+  padding: 1rem;
+}
+
+.table tbody td {
+  padding: 1.2rem 1rem;
+}

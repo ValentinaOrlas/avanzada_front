@@ -1,1 +1,57 @@
-<p>login works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-5">
+      
+      <div class="card shadow-lg">
+        <div class="card-body p-4">
+          
+          <h2 class="fw-bold text-primary text-center mb-4">Iniciar Sesión</h2>
+          <p class="text-center text-muted mb-4 small">Accede a tu cuenta institucional</p>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            
+            <div class="mb-3">
+              <label class="form-label fw-medium text-dark">Tipo de Documento</label>
+              <select formControlName="tipoDocumento" class="form-select">
+                <option value="" disabled selected>Seleccione un tipo...</option>
+                @for (tipo of tiposDocumento; track tipo) {
+                  <option [value]="tipo">{{ tipo }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium text-dark">Número de Identificación</label>
+              <input type="text" formControlName="identificacion" class="form-control" 
+                     placeholder="Ingrese su identificación">
+              @if (loginForm.get('identificacion')?.invalid && loginForm.get('identificacion')?.touched) {
+                <small class="text-danger">La identificación es obligatoria</small>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-medium text-dark">Contraseña</label>
+              <input type="password" formControlName="password" class="form-control" 
+                     placeholder="••••••••">
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary shadow-sm" [disabled]="loginForm.invalid">
+                INGRESAR
+              </button>
+            </div>
+
+            <div class="mt-4 text-center">
+              <span class="text-muted small">¿No tienes cuenta? </span>
+              <a routerLink="/registro" class="text-decoration-none fw-bold small" style="color: #0056b3;">
+                Regístrate aquí
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

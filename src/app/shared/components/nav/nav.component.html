@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #0056b3;">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">SISTEMA PQRS</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        @if (isLoggedIn) {
+          
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/solicitudes">Ver Solicitudes</a>
+          </li>
+
+          @if (role === 'ESTUDIANTE') {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/solicitudes/nueva">Crear PQRS</a>
+            </li>
+          }
+
+          @if (role === 'COORDINADOR' || role === 'ADMIN') {
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Gestión</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" routerLink="/solicitudes">Clasificar Pendientes</a></li>
+                <li><a class="dropdown-item" routerLink="/solicitudes">Asignar Docentes</a></li>
+              </ul>
+            </li>
+          }
+
+          @if (role === 'ADMIN') {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/usuarios">Control de Usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin/crear-personal">Registrar Personal</a>
+            </li>
+          }
+        }
+      </ul>
+
+      <div class="d-flex align-items-center">
+        @if (isLoggedIn) {
+          <span class="badge rounded-pill bg-light text-primary me-3 p-2">
+            {{ nombre }} | {{ role }}
+          </span>
+          <button class="btn btn-sm btn-danger fw-bold" (click)="logout()">Cerrar Sesión</button>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
