@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest, TokenResponse } from '../../models/auth.model';
 import { Observable, tap } from 'rxjs';
@@ -7,27 +7,54 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  // 1. Inyección de dependencias moderna (Guía Pág. 6)
   private http = inject(HttpClient);
-  
-  // 2. URL de tu API en Spring Boot
   private readonly API_URL = 'http://localhost:8080/api/auth';
 
-  // 3. Método de Login (Guía Pág. 30)
+  // SIGNAL para el estado de autenticación (La clave de la reactividad)
+  // Se inicializa verificando si ya existe un token
+  public currentUser = signal<{ nombre: string, rol: string } | null>(this.getUserFromStorage());
+
   login(credentials: LoginRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.API_URL}/login`, credentials).pipe(
       tap(response => {
+        // Guardamos en Storage
         localStorage.setItem('token', response.token);
+        localStorage.setItem('rol', response.tipoUsuario);
+        localStorage.setItem('nombre', response.nombre);
+        
+        const payload = JSON.parse(atob(response.token.split('.')[1]));
+        localStorage.setItem('identificacion', payload.sub);
+
+        // ACTUALIZAMOS EL SIGNAL (Esto avisará al Navbar automáticamente)
+        this.currentUser.set({
+          nombre: response.nombre,
+          rol: response.tipoUsuario
+        });
       })
     );
   }
 
-  // Métodos de apoyo recomendados
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.clear(); // Limpia todo (token, rol, nombre)
+    this.currentUser.set(null); // Notifica a toda la app que ya no hay usuario
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  // MÉTODOS DE APOYO PARA EL NAVBAR
+  isLoggedIn(): boolean {
+    return !!this.currentUser();
+  }
+
+  getRole(): string | null {
+    return this.currentUser()?.rol || null;
+  }
+
+  getNombre(): string | null {
+    return this.currentUser()?.nombre || null;
+  }
+
+  private getUserFromStorage() {
+    const nombre = localStorage.getItem('nombre');
+    const rol = localStorage.getItem('rol');
+    return (nombre && rol) ? { nombre, rol } : null;
   }
 }

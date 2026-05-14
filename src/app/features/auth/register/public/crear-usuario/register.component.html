@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4 fw-bold text-primary">Registro de Usuario</h2>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nombre Completo</label>
+              <input type="text" formControlName="nombre" class="form-control" placeholder="Ej: Juan Pérez"
+                [class.is-invalid]="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched">
+              @if (registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched) {
+              <div class="invalid-feedback">El nombre es obligatorio (mín. 3 caracteres)</div>
+              }
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">Tipo de Documento</label>
+                <select formControlName="tipoDocumento" class="form-select">
+                  @if (tiposDocumento.length === 0) {
+                  <option>Cargando opciones...</option>
+                  } @else {
+                  <option value="" disabled selected>Seleccione un tipo...</option>
+                  @for (tipo of tiposDocumento; track tipo) {
+                  <option [value]="tipo">{{ tipo }}</option>
+                  }
+                  }
+                </select>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">Identificación</label>
+                <input type="text" formControlName="identificacion" class="form-control" placeholder="12345678"
+                  [class.is-invalid]="registerForm.get('identificacion')?.invalid && registerForm.get('identificacion')?.touched">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Correo Electrónico</label>
+              <input type="email" formControlName="email" class="form-control" placeholder="correo@ejemplo.com"
+                [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              @if (registerForm.get('email')?.errors?.['email']) {
+              <div class="invalid-feedback">El formato de correo no es válido</div>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Contraseña</label>
+              <input type="password" formControlName="password" class="form-control" placeholder="••••••••"
+                [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              @if (registerForm.get('password')?.errors?.['minlength']) {
+              <div class="invalid-feedback">Mínimo 6 caracteres</div>
+              }
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg shadow-sm" [disabled]="registerForm.invalid">
+                <i class="bi bi-person-plus-fill me-2"></i>Registrarme
+              </button>
+              <a routerLink="/login" class="btn btn-link text-decoration-none">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

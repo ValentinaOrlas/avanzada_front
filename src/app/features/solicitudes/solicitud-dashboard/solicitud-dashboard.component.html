@@ -1,0 +1,61 @@
+<div class="container py-4">
+
+  <!-- ── VISTA ESTUDIANTE ── -->
+  <ng-container *ngIf="esEstudiante">
+    <div class="row mb-4">
+      <div class="col-12">
+        <h4 class="text-muted mb-3">
+          <i class="pi pi-plus-circle"></i> Nueva Solicitud
+        </h4>
+        <app-solicitud-crear (solicitudCreada)="refrescarHistorial()"></app-solicitud-crear>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="text-muted mb-3">
+          <i class="pi pi-history"></i> Mi Historial
+        </h4>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ── VISTA ADMIN / COORDINADOR / DOCENTE ── -->
+  <ng-container *ngIf="!esEstudiante">
+    <div class="dashboard-header mb-4">
+      <div class="header-info">
+        <h3 class="mb-0">Panel de Gestión</h3>
+        <p class="text-muted mb-0">
+          {{ esAdmin ? 'Administrador' : esCoordinador ? 'Coordinador' : 'Docente' }}
+          · Gestión de Solicitudes
+        </p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-chip">
+          <i class="pi pi-inbox text-primary"></i>
+          <span>{{ solicitudService.totalPendientes() }} pendientes</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- LISTA ÚNICA — modoAdmin según el rol -->
+  <!-- LISTA ÚNICA — modoAdmin según el rol -->
+<div class="row">
+  <div class="col-12">
+    <app-solicitud-lista
+      #listaComponent
+      [modoAdmin]="esAdmin || esCoordinador"
+      (onVerDetalle)="verDetalleEnModal($event)">
+    </app-solicitud-lista>
+  </div>
+</div>
+
+</div>
+
+<!-- MODAL DETALLE -->
+<app-solicitud-detalle
+  [display]="mostrarModal"
+  [solicitud]="solicitudSeleccionada"
+  (onClose)="mostrarModal = false"
+  (onUpdate)="refrescarHistorial()">
+</app-solicitud-detalle>

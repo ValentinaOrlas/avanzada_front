@@ -1,0 +1,53 @@
+<p-dialog
+  header="Asignar Responsable"
+  [(visible)]="display"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  (onHide)="cerrar()"
+  [draggable]="false">
+
+  <div *ngIf="solicitud">
+    <div class="mb-3 p-3 border-round" style="background: #f0f7ff; border: 1px solid #bfdbfe;">
+      <span class="text-sm text-600">Solicitud: </span>
+      <span class="text-sm font-bold">{{ solicitud.codigo | slice:0:8 }}...</span>
+      <span class="text-sm text-600 ml-3">Tipo: </span>
+      <span class="text-sm font-bold">{{ solicitud.tipoNombre?.replace('_', ' ') }}</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
+
+      <div class="flex flex-column gap-2">
+        <label class="font-bold">Responsable <span class="text-red-500">*</span></label>
+        <p-select
+          [options]="responsables"
+          formControlName="responsableId"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecciona docente o coordinador"
+          styleClass="w-full">
+        </p-select>
+        <small *ngIf="responsables.length === 0" class="text-orange-500">
+          No hay docentes o coordinadores activos disponibles.
+        </small>
+      </div>
+
+      <div class="flex justify-content-end gap-2 mt-2">
+        <p-button
+          label="Cancelar"
+          icon="pi pi-times"
+          styleClass="p-button-outlined p-button-secondary"
+          type="button"
+          (onClick)="cerrar()">
+        </p-button>
+        <p-button
+          label="Asignar"
+          icon="pi pi-user-edit"
+          type="submit"
+          [loading]="enviando"
+          [disabled]="form.invalid || enviando">
+        </p-button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>

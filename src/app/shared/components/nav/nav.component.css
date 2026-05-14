@@ -1,0 +1,230 @@
+/* ── CONTENEDOR PRINCIPAL ── */
+.app-navbar {
+  background-color: #0a2a5e;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 62px;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ── MARCA ── */
+.navbar-brand {
+  color: white;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.brand-pill {
+  background: #f5b942;
+  color: #0a2a5e;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+/* ── LINKS ── */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 13px;
+  border-radius: 7px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  display: block;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+.nav-sep {
+  display: block;
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 6px;
+}
+
+/* ── DROPDOWN ADMIN ── */
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 13px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dropdown-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #0f3470;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  min-width: 190px;
+  padding: 6px;
+  list-style: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+}
+
+.dropdown-wrapper:hover .dropdown-menu-custom {
+  display: block;
+}
+
+.dropdown-item-custom {
+  display: block;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+
+.dropdown-item-custom:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* ── LADO DERECHO ── */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-nav {
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-login {
+  background: transparent;
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.btn-register {
+  background: #f5b942;
+  color: #0a2a5e;
+  border: none;
+}
+
+.btn-register:hover {
+  background: #e5a830;
+}
+
+/* ── CHIP DE USUARIO LOGUEADO ── */
+.user-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  padding: 5px 14px 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.role-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Color por rol */
+.dot-admin      { background: #f87171; }
+.dot-coordinador { background: #34d399; }
+.dot-docente    { background: #60a5fa; }
+.dot-estudiante { background: #f5b942; }
+
+.role-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+.btn-salir {
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #fca5a5;
+  padding: 6px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.btn-salir:hover {
+  background: rgba(220, 38, 38, 0.25);
+  color: #fecaca;
+}

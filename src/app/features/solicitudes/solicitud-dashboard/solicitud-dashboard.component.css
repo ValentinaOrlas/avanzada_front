@@ -1,0 +1,28 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 0.5px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.header-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.stat-chip {
+  background: #e8f0fc;
+  color: #0a2a5e;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

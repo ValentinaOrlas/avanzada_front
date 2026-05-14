@@ -1,5 +1,54 @@
-<h1 id="titulo-listado">Mis Solicitudes</h1>
+<p-card header="Mi Historial de Solicitudes" styleClass="mt-4">
+  <p-table 
+    [value]="solicitudes" 
+    [rows]="5" 
+    [paginator]="true" 
+    responsiveLayout="scroll"
+    styleClass="p-datatable-sm p-datatable-striped">
 
-<div class="solicitud-card">
-  <p>Aquí aparecerán las solicitudes...</p>
-</div>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Código</th>
+        <th>Tipo</th>
+        <th>Prioridad</th>
+        <th>Estado</th>
+        <th style="width: 80px">Detalle</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-s>
+      <tr>
+        <td><span class="font-bold text-sm">{{ s.codigo | slice:0:8 }}...</span></td>
+        <td>{{ s.tipoNombre?.replace('_', ' ') }}</td>
+        <td>
+          <p-tag 
+            [value]="s.nivelPrioridad || 'N/A'"
+            [severity]="s.nivelPrioridad === 'ALTA' ? 'danger' : s.nivelPrioridad === 'MEDIA' ? 'warn' : 'info'">
+          </p-tag>
+        </td>
+        <td>
+          <p-tag 
+            [value]="s.estado" 
+            [severity]="getSeverity(s.estado)">
+          </p-tag>
+        </td>
+        <td>
+          <p-button 
+            icon="pi pi-eye" 
+            styleClass="p-button-text p-button-rounded" 
+            (onClick)="verDetalle(s)">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="text-center p-4 text-500">
+          No tienes solicitudes registradas actualmente.
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</p-card>
