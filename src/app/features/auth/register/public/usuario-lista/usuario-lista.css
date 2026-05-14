@@ -1,5 +1,5 @@
-.admin-container {
-  max-width: 700px;
+.lista-container {
+  max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
@@ -10,13 +10,19 @@
   padding: 1.2rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
+  justify-content: space-between;
   border-radius: 12px 12px 0 0;
 }
 
-.card-header-custom i {
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.header-left i {
   font-size: 20px;
   color: #f5b942;
 }

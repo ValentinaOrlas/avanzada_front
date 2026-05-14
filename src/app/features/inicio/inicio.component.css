@@ -1,0 +1,161 @@
+.inicio-container {
+  background: #f3f4f8;
+}
+
+/* ── BANNER ── */
+.banner-wrapper {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Overlay encima de la imagen */
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 42, 94, 0.82) 0%,
+    rgba(10, 42, 94, 0.45) 60%,
+    rgba(10, 42, 94, 0.15) 100%
+  );
+  display: flex;
+  align-items: center;
+  padding: 0 4rem;
+}
+
+.banner-content {
+  max-width: 520px;
+}
+
+.banner-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5b942;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.banner-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: white;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.banner-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── SECCIÓN CARDS ── */
+.pilares-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem 4rem;
+}
+
+.pilares-eyebrow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 2rem;
+}
+
+.pilares-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* ── CARD ── */
+.pilar-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem 2rem 2rem;
+  border: 0.5px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pilar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09);
+}
+
+/* Barra de color superior */
+.pilar-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+}
+
+.pilar-blue .pilar-accent  { background: #0a2a5e; }
+.pilar-amber .pilar-accent { background: #f5b942; }
+
+/* Ícono */
+.pilar-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  font-size: 22px;
+}
+
+.icon-blue  { background: #e8f0fc; color: #0a2a5e; }
+.icon-amber { background: #fef3e2; color: #d97706; }
+
+.pilar-titulo {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 10px;
+}
+
+.pilar-desc {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .pilares-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-wrapper {
+    height: 280px;
+  }
+
+  .banner-overlay {
+    padding: 0 1.5rem;
+  }
+
+  .banner-title {
+    font-size: 28px;
+  }
+}

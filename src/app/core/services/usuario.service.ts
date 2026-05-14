@@ -28,4 +28,15 @@ login(datos: any): Observable<any> {
 getRoles(): Observable<string[]> {
     return this.http.get<string[]>(`${this.API_URL}/roles`);
   }
+
+  listarTodos(): Observable<DetalleUsuarioResponse[]> {
+    return this.http.get<DetalleUsuarioResponse[]>(this.API_URL);
+  }
+
+  desactivar(tipoDocumento: string, identificacion: string): Observable<void> {
+    return this.http.patch<void>(
+      `${this.API_URL}/${tipoDocumento}/${identificacion}/desactivar`,
+      {}
+    );
+  }
 }

@@ -1,50 +1,60 @@
-<nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #0056b3;">
-  <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">SISTEMA PQRS</a>
+<nav class="app-navbar">
+  <div class="navbar-inner">
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        @if (isLoggedIn) {
-          
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/solicitudes">Ver Solicitudes</a>
+    <!-- MARCA -->
+    <a class="navbar-brand" routerLink="/">
+      SISTEMA PQRS
+      <span class="brand-pill">PQRS</span>
+    </a>
+
+    <ul class="navbar-links">
+      @if (authService.isLoggedIn()) {
+
+        <!-- TODOS LOS ROLES -->
+        <li>
+          <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">
+            <i class="pi pi-inbox mr-1"></i> Solicitudes
+          </a>
+        </li>
+
+        <!-- ADMIN / COORDINADOR -->
+        @if (authService.getRole() === 'COORDINADOR' || authService.getRole() === 'ADMIN') {
+          <li><span class="nav-sep"></span></li>
+          <li>
+            <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">
+              <i class="pi pi-users mr-1"></i> Usuarios
+            </a>
           </li>
-
-          @if (role === 'ESTUDIANTE') {
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/solicitudes/nueva">Crear PQRS</a>
-            </li>
-          }
-
-          @if (role === 'COORDINADOR' || role === 'ADMIN') {
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Gestión</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" routerLink="/solicitudes">Clasificar Pendientes</a></li>
-                <li><a class="dropdown-item" routerLink="/solicitudes">Asignar Docentes</a></li>
-              </ul>
-            </li>
-          }
-
-          @if (role === 'ADMIN') {
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/usuarios">Control de Usuarios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/admin/crear-personal">Registrar Personal</a>
-            </li>
-          }
         }
-      </ul>
 
-      <div class="d-flex align-items-center">
-        @if (isLoggedIn) {
-          <span class="badge rounded-pill bg-light text-primary me-3 p-2">
-            {{ nombre }} | {{ role }}
-          </span>
-          <button class="btn btn-sm btn-danger fw-bold" (click)="logout()">Cerrar Sesión</button>
+        <!-- SOLO ADMIN -->
+        @if (authService.getRole() === 'ADMIN') {
+          <li>
+            <a class="nav-link" routerLink="/admin/crear-personal" routerLinkActive="active">
+              <i class="pi pi-user-plus mr-1"></i> Crear Personal
+            </a>
+          </li>
         }
-      </div>
+
+      }
+    </ul>
+
+    <!-- LADO DERECHO -->
+    <div class="navbar-right">
+      @if (!authService.isLoggedIn()) {
+        <a routerLink="/login" class="btn-nav btn-login">Iniciar sesión</a>
+        <a routerLink="/registro" class="btn-nav btn-register">Registrarse</a>
+      } @else {
+        <div class="user-chip">
+          <span class="role-dot" [class]="'dot-' + authService.getRole()?.toLowerCase()"></span>
+          <span>{{ authService.getNombre() }}</span>
+          <span class="role-label">{{ authService.getRole() }}</span>
+        </div>
+        <button class="btn-salir" (click)="logout()">
+          <i class="pi pi-sign-out"></i> Salir
+        </button>
+      }
     </div>
+
   </div>
 </nav>

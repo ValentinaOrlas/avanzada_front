@@ -11,15 +11,12 @@ export const rolesGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  // Obtenemos los roles permitidos (configurados en app.routes.ts)
   const expectedRoles: string[] = route.data['roles'];
 
-  // Si el rol del usuario está en la lista de permitidos
   if (expectedRoles && expectedRoles.includes(userRole || '')) {
     return true;
   }
 
-  // Si no tiene permiso, lo mandamos al inicio (o una página 403)
   router.navigate(['/']); 
   return false;
 };

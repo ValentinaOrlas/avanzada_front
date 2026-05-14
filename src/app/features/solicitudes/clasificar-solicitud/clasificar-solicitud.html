@@ -1,0 +1,76 @@
+<p-dialog
+  header="Clasificar Solicitud"
+  [(visible)]="display"
+  [modal]="true"
+  [style]="{ width: '480px' }"
+  (onHide)="cerrar()"
+  [draggable]="false">
+
+  <div *ngIf="solicitud">
+    <div class="mb-3 p-3 border-round" style="background: #f0f7ff; border: 1px solid #bfdbfe;">
+      <span class="text-sm text-600">Solicitud: </span>
+      <span class="text-sm font-bold">{{ solicitud.codigo | slice:0:8 }}...</span>
+      <span class="text-sm text-600 ml-3">Estado: </span>
+      <span class="text-sm font-bold">{{ solicitud.estado }}</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
+
+      <div class="flex flex-column gap-2">
+        <label class="font-bold">Tipo de Trámite</label>
+        <p-select
+          [options]="tipos"
+          formControlName="tipoSolicitud"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecciona tipo (opcional)"
+          styleClass="w-full">
+        </p-select>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label class="font-bold">Prioridad</label>
+        <p-select
+          [options]="prioridades"
+          formControlName="prioridad"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecciona prioridad (opcional)"
+          styleClass="w-full">
+        </p-select>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label class="font-bold">Justificación <span class="text-red-500">*</span></label>
+        <textarea
+          pTextarea
+          formControlName="justificacion"
+          rows="3"
+          class="w-full"
+          placeholder="Mínimo 10 caracteres...">
+        </textarea>
+        <small *ngIf="form.get('justificacion')?.invalid && form.get('justificacion')?.touched" class="text-red-500">
+          La justificación es obligatoria (mín. 10 caracteres)
+        </small>
+      </div>
+
+      <div class="flex justify-content-end gap-2 mt-2">
+        <p-button
+          label="Cancelar"
+          icon="pi pi-times"
+          styleClass="p-button-outlined p-button-secondary"
+          type="button"
+          (onClick)="cerrar()">
+        </p-button>
+        <p-button
+          label="Clasificar"
+          icon="pi pi-check"
+          type="submit"
+          [loading]="enviando"
+          [disabled]="form.get('justificacion')?.invalid || enviando">
+        </p-button>
+      </div>
+
+    </form>
+  </div>
+</p-dialog>

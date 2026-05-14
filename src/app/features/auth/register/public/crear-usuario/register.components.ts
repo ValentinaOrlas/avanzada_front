@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit,ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from '../../../../core/services/usuario.service';
+import { UsuarioService } from '../../../../../core/services/usuario.service';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2'; // Importamos SweetAlert
 
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2'; // Importamos SweetAlert
 export class Registro implements OnInit { 
   private fb = inject(FormBuilder);
   private usuarioService = inject(UsuarioService);
+    private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
   
   public tiposDocumento: string[] = [];
@@ -27,10 +28,12 @@ export class Registro implements OnInit {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.usuarioService.getTiposDocumento().subscribe({
-      next: (tipos) => this.tiposDocumento = tipos,
-      error: (err) => console.error('Error cargando tipos:', err)
+      next: (tipos) => {
+        this.tiposDocumento = tipos;
+        this.cdr.detectChanges();
+      }
     });
   }
 
