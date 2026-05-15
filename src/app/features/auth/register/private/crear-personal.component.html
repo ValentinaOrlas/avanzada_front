@@ -1,5 +1,5 @@
 <div class="admin-container">
-  <p-card>
+  <p-card styleClass="shadow-4 border-round-xl overflow-hidden">
     <ng-template pTemplate="header">
       <div class="card-header-custom">
         <i class="pi pi-user-plus"></i>
@@ -7,23 +7,21 @@
       </div>
     </ng-template>
 
-    <form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-
+    <form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="p-3">
       <div class="grid">
-        <!-- TIPO DOCUMENTO -->
-        <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label class="font-bold">Tipo de Documento</label>
+        
+        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Tipo de Documento</label>
           <p-select
             [options]="tiposDocumento"
             formControlName="tipoDocumento"
             placeholder="Selecciona tipo"
-            styleClass="w-full">
+            [fluid]="true">
           </p-select>
         </div>
 
-        <!-- IDENTIFICACIÓN -->
-        <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label class="font-bold">Número de Identificación</label>
+        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Número de Identificación</label>
           <input 
             pInputText 
             formControlName="identificacion" 
@@ -31,19 +29,17 @@
             class="w-full">
         </div>
 
-        <!-- NOMBRE -->
-        <div class="col-12 flex flex-column gap-2">
-          <label class="font-bold">Nombre Completo</label>
+        <div class="col-12 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Nombre Completo</label>
           <input 
             pInputText 
             formControlName="nombre" 
-            placeholder="Nombre completo"
+            placeholder="Ingresa el nombre completo"
             class="w-full">
         </div>
 
-        <!-- EMAIL -->
-        <div class="col-12 flex flex-column gap-2">
-          <label class="font-bold">Correo Electrónico</label>
+        <div class="col-12 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Correo Electrónico</label>
           <input 
             pInputText 
             type="email"
@@ -52,38 +48,36 @@
             class="w-full">
         </div>
 
-        <!-- ROL -->
-        <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label class="font-bold">Cargo / Rol</label>
+        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Cargo / Rol</label>
           <p-select
             [options]="rolesOpciones"
             formControlName="tipoUsuario"
             optionLabel="label"
             optionValue="value"
             placeholder="Selecciona rol"
-            styleClass="w-full">
+            [fluid]="true">
           </p-select>
         </div>
 
-        <!-- CONTRASEÑA -->
-        <div class="col-12 md:col-6 flex flex-column gap-2">
-          <label class="font-bold">Contraseña Temporal</label>
+        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
+          <label class="font-bold text-800">Contraseña Temporal</label>
           <p-password
             formControlName="password"
             placeholder="Mínimo 6 caracteres"
-            styleClass="w-full"
             [feedback]="false"
-            [toggleMask]="true">
+            [toggleMask]="true"
+            [fluid]="true">
           </p-password>
         </div>
+
       </div>
 
-      <div class="flex justify-content-end gap-2 mt-3">
+      <div class="flex justify-content-end gap-3 mt-4 pt-3 border-top-1 border-200">
         <p-button 
           label="Cancelar" 
-          icon="pi pi-times"
-          styleClass="p-button-outlined p-button-secondary"
-          type="button"
+          severity="secondary"
+          [outlined]="true"
           (onClick)="cancelar()">
         </p-button>
         <p-button 
@@ -94,7 +88,6 @@
           type="submit">
         </p-button>
       </div>
-
     </form>
   </p-card>
 </div>

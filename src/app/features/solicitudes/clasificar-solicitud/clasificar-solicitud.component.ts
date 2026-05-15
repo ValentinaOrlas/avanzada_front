@@ -2,16 +2,23 @@ import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { Button } from 'primeng/button';
-import { Select } from 'primeng/select';
-import { Textarea } from 'primeng/textarea';
+import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
 import { SolicitudService } from '../../../core/services/solictud.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clasificar-solicitud',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DialogModule, Button, Select, Textarea],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    DialogModule, 
+    ButtonModule, 
+    SelectModule, 
+    TextareaModule
+  ],
   templateUrl: './clasificar-solicitud.html'
 })
 export class ClasificarSolicitud implements OnInit {
@@ -24,7 +31,6 @@ export class ClasificarSolicitud implements OnInit {
   @Output() onUpdate = new EventEmitter<void>();
 
   public enviando = false;
-
   public tipos: any[] = [];
   public prioridades = [
     { label: 'Alta',  value: 'ALTA' },
@@ -35,15 +41,27 @@ export class ClasificarSolicitud implements OnInit {
   public form = this.fb.group({
     tipoSolicitud: [null],
     prioridad:     [null],
-    justificacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]]
+    justificacion: ['', [
+      Validators.required, 
+      Validators.minLength(10), 
+      Validators.maxLength(500)
+    ]]
   });
 
   ngOnInit() {
+    this.cargarTipos();
+  }
+
+  cargarTipos() {
     this.solicitudService.getTipos().subscribe({
       next: (res: any) => {
         const data = Array.isArray(res) ? res : [];
-        this.tipos = data.map((t: string) => ({ label: t.replace(/_/g, ' '), value: t }));
-      }
+        this.tipos = data.map((t: string) => ({ 
+          label: t.replace(/_/g, ' '), 
+          value: t 
+        }));
+      },
+      error: () => console.error('Error al cargar tipos de trámite')
     });
   }
 
@@ -53,21 +71,30 @@ export class ClasificarSolicitud implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.get('justificacion')?.invalid || this.enviando) return;
+    if (this.form.invalid || this.enviando) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.enviando = true;
     const payload = this.form.getRawValue();
 
     this.solicitudService.clasificarSolicitud(this.solicitud.codigo, payload).subscribe({
       next: () => {
-        Swal.fire('¡Clasificada!', 'La solicitud fue clasificada exitosamente.', 'success');
+        Swal.fire({
+          title: '¡Clasificada!',
+          text: 'La solicitud fue clasificada exitosamente.',
+          icon: 'success',
+          confirmButtonColor: '#10b981'
+        });
         this.form.reset();
         this.onUpdate.emit();
         this.onClose.emit();
+        this.enviando = false;
       },
       error: (err) => {
         this.enviando = false;
-        Swal.fire('Error', err.error?.mensaje || 'No se pudo clasificar', 'error');
+        Swal.fire('Error', err.error?.mensaje || 'No se pudo completar la acción', 'error');
       }
     });
   }

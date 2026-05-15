@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit,ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { AuthService } from '../../../core/services/auth.service'; // Asegúrate de importar tu AuthService
@@ -18,9 +18,11 @@ export class Login implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private usuarioService = inject(UsuarioService);
+  private cd = inject(ChangeDetectorRef); // Importalo de @angular/core
   private router = inject(Router);
 
   public tiposDocumento: string[] = [];
+  
 
   public loginForm = this.fb.group({
     tipoDocumento: ['', [Validators.required]],
@@ -28,13 +30,15 @@ export class Login implements OnInit {
     password: ['', [Validators.required]]
   });
 
-  ngOnInit(): void {
-    // Carga los tipos de documento
-    this.usuarioService.getTiposDocumento().subscribe({
-      next: (res) => this.tiposDocumento = res,
-      error: () => console.error("Error cargando documentos")
-    });
-  }
+ ngOnInit(): void {
+  this.usuarioService.getTiposDocumento().subscribe({
+    next: (res) => {
+      this.tiposDocumento = res;
+      this.cd.detectChanges(); 
+    },
+    error: () => console.error("Error cargando documentos")
+  });
+}
 
   onLogin() {
     if (this.loginForm.valid) {

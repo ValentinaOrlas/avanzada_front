@@ -3,14 +3,13 @@
 
     <!-- MARCA -->
     <a class="navbar-brand" routerLink="/">
-      SISTEMA PQRS
-      <span class="brand-pill">PQRS</span>
+      SISTEMA SOLICITUDES
+      <span class="brand-pill">UNIQUINDIO</span>
     </a>
 
     <ul class="navbar-links">
       @if (authService.isLoggedIn()) {
 
-        <!-- TODOS LOS ROLES -->
         <li>
           <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">
             <i class="pi pi-inbox mr-1"></i> Solicitudes

@@ -1,174 +1,198 @@
-<p-dialog
-  header="Detalle de la Solicitud"
-  [(visible)]="display"
-  [modal]="true"
-  [style]="{ width: '520px' }"
-  (onHide)="cerrarDialogo()"
-  [draggable]="false">
+<p-dialog header="Detalle de la Solicitud" [(visible)]="display" [modal]="true" [style]="{ width: '520px' }"
+    (onHide)="cerrarDialogo()" [draggable]="false">
 
-  <div *ngIf="solicitud">
+    <div *ngIf="solicitud">
 
-    <!-- ENCABEZADO -->
-    <div class="flex justify-content-between align-items-center mb-3">
-      <span class="text-sm font-bold text-500">{{ solicitud.codigo }}</span>
-      <p-tag [value]="solicitud.estado" [severity]="getSeverity(solicitud.estado)"></p-tag>
-    </div>
+        <!-- ENCABEZADO -->
+        <div class="flex justify-content-between align-items-center mb-3">
+            <span class="text-sm font-bold text-500">
+                {{ solicitud.codigo }}
+            </span>
 
-    <p-divider></p-divider>
+            <p-tag [value]="solicitud.estado" [severity]="getSeverity(solicitud.estado)">
+            </p-tag>
+        </div>
 
-    <!-- TIPO -->
-    <div class="field mb-3">
-      <span class="block font-bold text-sm text-600 uppercase mb-1">Trámite</span>
-      <span class="text-lg">{{ solicitud.tipoNombre?.replace('_', ' ') }}</span>
-    </div>
+        <p-divider></p-divider>
 
-    <!-- PRIORIDAD -->
-    <div class="field mb-3">
-      <span class="block font-bold text-sm text-600 uppercase mb-1">Prioridad</span>
-      <p-tag
-        [value]="solicitud.nivelPrioridad || 'No asignada'"
-        [severity]="solicitud.nivelPrioridad === 'ALTA' ? 'danger' : solicitud.nivelPrioridad === 'MEDIA' ? 'warn' : 'info'">
-      </p-tag>
-    </div>
+        <!-- TRÁMITE -->
+        <div class="field mb-3">
+            <span class="block font-bold text-sm text-600 uppercase mb-1">
+                Trámite
+            </span>
 
-    <!-- DESCRIPCIÓN -->
-    <div class="field mb-3">
-      <span class="block font-bold text-sm text-600 uppercase mb-1">Descripción</span>
-      <div class="p-3 bg-gray-100 border-round text-sm mt-1">
-        {{ solicitud.descripcionBreve }}
-      </div>
-    </div>
+            <span class="text-lg">
+                {{ solicitud.tipo?.nombre?.replace('_', ' ') || 'No asignado' }}
+            </span>
+        </div>
 
-    <!-- FECHA -->
-    <div class="field mb-3">
-      <span class="block font-bold text-sm text-600 uppercase mb-1">Fecha de Registro</span>
-      <span class="text-sm">{{ solicitud.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</span>
-    </div>
+        <!-- PRIORIDAD -->
+        <div class="field mb-3">
+            <span class="block font-bold text-sm text-600 uppercase mb-1">
+                Prioridad
+            </span>
 
-    <!-- RESPONSABLE -->
-    <div class="field mb-3" *ngIf="solicitud.responsableNombre">
-      <span class="block font-bold text-sm text-600 uppercase mb-1">Responsable</span>
-      <span class="text-sm">{{ solicitud.responsableNombre }}</span>
-    </div>
+            <p-tag [value]="solicitud.prioridad?.nombre || 'No asignada'" [severity]="
+          solicitud.prioridad?.nombre === 'ALTA'
+            ? 'danger'
+            : solicitud.prioridad?.nombre === 'MEDIA'
+            ? 'warn'
+            : 'info'
+        ">
+            </p-tag>
+        </div>
 
-    <p-divider *ngIf="puedeGestionar && solicitud.estado !== 'CERRADA' && solicitud.estado !== 'CANCELADA'"></p-divider>
+        <!-- DESCRIPCIÓN -->
+        <div class="field mb-3">
+            <span class="block font-bold text-sm text-600 uppercase mb-1">
+                Descripción
+            </span>
 
-    <!-- ACCIONES POR ROL -->
-    <div *ngIf="puedeGestionar && solicitud.estado !== 'CERRADA' && solicitud.estado !== 'CANCELADA'" class="mt-3">
-      <span class="block font-bold text-sm text-600 uppercase mb-3">Acciones</span>
-      <div class="flex flex-wrap gap-2">
+            <div class="p-3 bg-gray-100 border-round text-sm mt-1">
+                {{ solicitud.descripcion || 'Sin descripción registrada' }}
+            </div>
+        </div>
 
-        <!-- CLASIFICAR: ADMIN/COORDINADOR cuando está REGISTRADA -->
-        <p-button
-          *ngIf="puedeClasificar && solicitud.estado === 'REGISTRADA'"
-          label="Clasificar"
-          icon="pi pi-tag"
-          styleClass="p-button-sm p-button-outlined"
-          (onClick)="mostrarClasificar = true">
-        </p-button>
+        <!-- FECHA -->
+        <div class="field mb-3">
+            <span class="block font-bold text-sm text-600 uppercase mb-1">
+                Fecha de Registro
+            </span>
 
-        <!-- ASIGNAR: ADMIN/COORDINADOR cuando está CLASIFICADA -->
-        <p-button
-          *ngIf="puedeAsignar && solicitud.estado === 'CLASIFICADA'"
-          label="Asignar Responsable"
-          icon="pi pi-user-edit"
-          styleClass="p-button-sm p-button-outlined p-button-info"
-          (onClick)="mostrarAsignar = true">
-        </p-button>
+            <span class="text-sm">
+                {{ solicitud.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+        </div>
 
-        <!-- ATENDER: ADMIN/DOCENTE cuando está EN_ATENCION -->
-        <p-button
-          *ngIf="puedeAtender && solicitud.estado === 'EN_ATENCION'"
-          label="Marcar Atendida"
-          icon="pi pi-check-circle"
-          styleClass="p-button-sm p-button-outlined p-button-success"
-          (onClick)="mostrarAtender = true">
-        </p-button>
+        <!-- RESPONSABLE -->
+        <div class="field mb-3" *ngIf="solicitud.responsable">
+            <span class="block font-bold text-sm text-600 uppercase mb-1">
+                Responsable
+            </span>
 
-        <!-- CERRAR: ADMIN/DOCENTE cuando está ATENDIDA -->
-        <p-button
-          *ngIf="puedeCerrar && solicitud.estado === 'ATENDIDA'"
-          label="Cerrar Solicitud"
-          icon="pi pi-lock"
-          styleClass="p-button-sm p-button-outlined p-button-secondary"
-          (onClick)="mostrarCierre = true">
-        </p-button>
+            <span class="text-sm">
+                {{ solicitud.responsable.nombre }}
+            </span>
+        </div>
 
-        <!-- CANCELAR: solo ADMIN -->
-        <p-button
-          *ngIf="puedeCancelar"
-          label="Cancelar"
-          icon="pi pi-ban"
-          styleClass="p-button-sm p-button-outlined p-button-danger"
-          (onClick)="mostrarCancelar = true">
-        </p-button>
+        <p-divider *ngIf="
+        puedeGestionar &&
+        solicitud.estado !== 'CERRADA' &&
+        solicitud.estado !== 'CANCELADA'
+      ">
+        </p-divider>
 
-      </div>
-    </div>
+        <!-- ACCIONES POR ROL -->
+        <div *ngIf="
+        puedeGestionar &&
+        solicitud.estado !== 'CERRADA' &&
+        solicitud.estado !== 'CANCELADA'
+      " class="mt-3">
+            <span class="block font-bold text-sm text-600 uppercase mb-3">
+                Acciones
+            </span>
 
-    <!-- CIERRE INLINE -->
-    <div *ngIf="mostrarCierre" class="mt-3">
-      <span class="block font-bold text-sm text-primary uppercase mb-2">Observación de Cierre</span>
-      <textarea
-        rows="3"
-        class="w-full p-2 border-round border-1 border-300"
-        placeholder="Escribe la observación para cerrar este caso..."
-        [(ngModel)]="observacionCierre">
+            <div class="flex flex-wrap gap-2">
+
+                <!-- CLASIFICAR -->
+                <p-button *ngIf="
+            puedeClasificar &&
+            solicitud.estado === 'REGISTRADA'
+          " label="Clasificar" icon="pi pi-tag" styleClass="p-button-sm p-button-outlined"
+                    (onClick)="mostrarClasificar = true">
+                </p-button>
+
+                <!-- ASIGNAR -->
+                <p-button *ngIf="
+            puedeAsignar &&
+            solicitud.estado === 'CLASIFICADA'
+          " label="Asignar Responsable" icon="pi pi-user-edit" styleClass="p-button-sm p-button-outlined p-button-info"
+                    (onClick)="mostrarAsignar = true">
+                </p-button>
+
+                <!-- ATENDER -->
+                <p-button *ngIf="
+            puedeAtender &&
+            solicitud.estado === 'EN_ATENCION'
+          " label="Marcar Atendida" icon="pi pi-check-circle"
+                    styleClass="p-button-sm p-button-outlined p-button-success" (onClick)="mostrarAtender = true">
+                </p-button>
+
+                <!-- CERRAR -->
+                <p-button *ngIf="
+            puedeCerrar &&
+            solicitud.estado === 'ATENDIDA'
+          " label="Cerrar Solicitud" icon="pi pi-lock" styleClass="p-button-sm p-button-outlined p-button-secondary"
+                    (onClick)="mostrarCierre = true">
+                </p-button>
+
+                <!-- CANCELAR -->
+                <p-button *ngIf="puedeCancelar" label="Cancelar" icon="pi pi-ban"
+                    styleClass="p-button-sm p-button-outlined p-button-danger" (onClick)="mostrarCancelar = true">
+                </p-button>
+
+            </div>
+        </div>
+
+        <!-- CIERRE INLINE -->
+        <div *ngIf="mostrarCierre" class="mt-3">
+
+            <span class="block font-bold text-sm text-primary uppercase mb-2">
+                Observación de Cierre
+            </span>
+
+            <textarea rows="3" class="w-full p-2 border-round border-1 border-300"
+                placeholder="Escribe la observación para cerrar este caso..." [(ngModel)]="observacionCierre">
       </textarea>
-      <div class="flex gap-2 mt-2">
-        <p-button
-          label="Confirmar Cierre"
-          icon="pi pi-lock"
-          styleClass="p-button-sm p-button-secondary"
-          (onClick)="confirmarCierre()">
-        </p-button>
-        <p-button
-          label="Cancelar"
-          icon="pi pi-times"
-          styleClass="p-button-sm p-button-outlined"
-          (onClick)="mostrarCierre = false">
-        </p-button>
-      </div>
-    </div>
 
-    <!-- MENSAJE ESTUDIANTE -->
-    <div *ngIf="esEstudiante && solicitud.estado !== 'CERRADA' && solicitud.estado !== 'CANCELADA'" class="mt-4">
-      <div class="p-3 border-round" style="background: #f0f7ff; border: 1px solid #bfdbfe;">
-        <span class="text-sm text-600">
-          <i class="pi pi-info-circle mr-2 text-primary"></i>
-          Tu solicitud está siendo procesada. Te notificaremos cuando haya novedades.
-        </span>
-      </div>
-    </div>
+            <div class="flex gap-2 mt-2">
 
-  </div>
+                <p-button label="Confirmar Cierre" icon="pi pi-lock" styleClass="p-button-sm p-button-secondary"
+                    (onClick)="confirmarCierre()">
+                </p-button>
+
+                <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-sm p-button-outlined"
+                    (onClick)="mostrarCierre = false">
+                </p-button>
+
+            </div>
+        </div>
+
+        <!-- MENSAJE ESTUDIANTE -->
+        <div *ngIf="
+        esEstudiante &&
+        solicitud.estado !== 'CERRADA' &&
+        solicitud.estado !== 'CANCELADA'
+      " class="mt-4">
+            <div class="p-3 border-round" style="
+          background: #f0f7ff;
+          border: 1px solid #bfdbfe;
+        ">
+                <span class="text-sm text-600">
+                    <i class="pi pi-info-circle mr-2 text-primary"></i>
+                    Tu solicitud está siendo procesada.
+                    Te notificaremos cuando haya novedades.
+                </span>
+            </div>
+        </div>
+
+    </div>
 </p-dialog>
 
-<!-- MODALES DE ACCIONES -->
-<app-clasificar-solicitud
-  [display]="mostrarClasificar"
-  [solicitud]="solicitud"
-  (onClose)="mostrarClasificar = false"
-  (onUpdate)="onAccionCompletada()">
+<!-- MODALES -->
+
+<app-clasificar-solicitud [display]="mostrarClasificar" [solicitud]="solicitud" (onClose)="mostrarClasificar = false"
+    (onUpdate)="onAccionCompletada()">
 </app-clasificar-solicitud>
 
-<app-asignar-responsable
-  [display]="mostrarAsignar"
-  [solicitud]="solicitud"
-  (onClose)="mostrarAsignar = false"
-  (onUpdate)="onAccionCompletada()">
+<app-asignar-responsable [display]="mostrarAsignar" [solicitud]="solicitud" (onClose)="mostrarAsignar = false"
+    (onUpdate)="onAccionCompletada()">
 </app-asignar-responsable>
 
-<app-atender-solicitud
-  [display]="mostrarAtender"
-  [solicitud]="solicitud"
-  (onClose)="mostrarAtender = false"
-  (onUpdate)="onAccionCompletada()">
+<app-atender-solicitud [display]="mostrarAtender" [solicitud]="solicitud" (onClose)="mostrarAtender = false"
+    (onUpdate)="onAccionCompletada()">
 </app-atender-solicitud>
 
-<app-cancelar-solicitud
-  [display]="mostrarCancelar"
-  [solicitud]="solicitud"
-  (onClose)="mostrarCancelar = false"
-  (onUpdate)="onAccionCompletada()">
+<app-cancelar-solicitud [display]="mostrarCancelar" [solicitud]="solicitud" (onClose)="mostrarCancelar = false"
+    (onUpdate)="onAccionCompletada()">
 </app-cancelar-solicitud>

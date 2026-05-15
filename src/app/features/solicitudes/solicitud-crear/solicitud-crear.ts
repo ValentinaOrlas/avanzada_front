@@ -8,11 +8,13 @@ import { Card } from 'primeng/card';
 import { Select } from 'primeng/select';
 import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
+import { Tag } from 'primeng/tag';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-solicitud-crear',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Card, Select, Textarea, Button],
+  imports: [CommonModule, ReactiveFormsModule, Select, Textarea, Button, TableModule],
   templateUrl: './solicitud-crear.html'
 })
 export class SolicitudCrear implements OnInit {
@@ -26,6 +28,7 @@ export class SolicitudCrear implements OnInit {
   public enviando = false;
   public analizando = false;
   public sugerencia: string = '';
+  public solicitudes: any[] = [];
 
   public solicitudForm = this.fb.group({
     descripcion: ['', [Validators.required, Validators.minLength(20)]],
@@ -49,82 +52,42 @@ export class SolicitudCrear implements OnInit {
 
   async sugerirTramite(): Promise<void> {
     const descripcion = this.solicitudForm.get('descripcion')?.value ?? '';
-
     if (!descripcion || descripcion.length < 20) return;
 
     this.analizando = true;
     this.sugerencia = '';
 
-    const tiposDisponibles = this.tipos.map(t => t.value).join(', ');
-    
-    // RECUERDA: Cambia esta KEY por una nueva en AI Studio ya que la anterior se expuso
-    const apiKey = 'AIzaSyD2rsqVbpCjS0zJcGf0HzHBM19MImkd8GA'; 
-    const modelName = 'gemini-2.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+    // Enviamos solo los valores técnicos al backend
+    const tiposDisponibles = this.tipos.map(t => t.value);
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `Eres un asistente universitario experto. Analiza el siguiente texto y clasifícalo en uno de estos tipos de trámite: [${tiposDisponibles}]. 
-                  Responde ÚNICAMENTE el nombre técnico del trámite (el valor exacto proporcionado).
-                  Texto del estudiante: "${descripcion}"`
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.1, // Baja temperatura para mayor precisión
-          }
-        })
-      });
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          this.sugerencia = '⏳ Servicio ocupado, intenta en unos segundos.';
-          return;
-        }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      // Limpieza profunda de la respuesta (quitamos posibles asteriscos o espacios extras)
-      const tipoSugerido = (
-        data?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
-      ).trim().replace(/[*]/g, '');
-
-      console.log('IA respondió:', tipoSugerido);
-
-      const tipoEncontrado = this.tipos.find(t =>
-        tipoSugerido === t.value ||
-        tipoSugerido.includes(t.value)
-      );
+    this.solicitudService.obtenerSugerenciaIA(descripcion, tiposDisponibles).subscribe({
+  next: (res) => {
+    // Usamos setTimeout para que el cambio ocurra en el siguiente ciclo de detección
+    setTimeout(() => {
+      const tipoSugerido = res.sugerencia.replace(/[*]/g, '').trim();
+      const tipoEncontrado = this.tipos.find(t => tipoSugerido.includes(t.value));
 
       if (tipoEncontrado) {
-        this.solicitudForm.patchValue({
-          tipoSolicitud: tipoEncontrado.value
-        });
+        this.solicitudForm.patchValue({ tipoSolicitud: tipoEncontrado.value });
         this.sugerencia = `✓ Sugerido: ${tipoEncontrado.label}`;
       } else {
-        this.sugerencia = 'IA sugirió: ' + tipoSugerido + '. Selecciónalo manualmente.';
+        this.sugerencia = 'La IA no pudo determinar el tipo exacto.';
       }
-
-    } catch (error) {
-      console.error('Error IA:', error);
-      this.sugerencia = 'Error al consultar la IA. Selecciona el tipo manualmente.';
-    } finally {
+      
+      this.analizando = false;
+      this.cdr.detectChanges(); // Le decimos a Angular: "¡Ey, mira de nuevo!"
+    }, 0);
+  },
+  error: () => {
+    setTimeout(() => {
+      this.sugerencia = 'Error al conectar con la IA.';
       this.analizando = false;
       this.cdr.detectChanges();
-    }
+    }, 0);
   }
+});
+  }
+
 
   onSubmit(): void {
     if (this.solicitudForm.valid && !this.enviando) {

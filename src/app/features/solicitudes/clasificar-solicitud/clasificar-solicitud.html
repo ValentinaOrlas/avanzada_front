@@ -1,74 +1,86 @@
-<p-dialog
-  header="Clasificar Solicitud"
-  [(visible)]="display"
-  [modal]="true"
-  [style]="{ width: '480px' }"
-  (onHide)="cerrar()"
-  [draggable]="false">
+<p-dialog 
+  header="Clasificar Solicitud" 
+  [(visible)]="display" 
+  [modal]="true" 
+  [style]="{ width: '450px' }" 
+  (onHide)="cerrar()" 
+  [draggable]="false"
+  [resizable]="false">
 
-  <div *ngIf="solicitud">
-    <div class="mb-3 p-3 border-round" style="background: #f0f7ff; border: 1px solid #bfdbfe;">
-      <span class="text-sm text-600">Solicitud: </span>
-      <span class="text-sm font-bold">{{ solicitud.codigo | slice:0:8 }}...</span>
-      <span class="text-sm text-600 ml-3">Estado: </span>
-      <span class="text-sm font-bold">{{ solicitud.estado }}</span>
+  <div *ngIf="solicitud" class="p-2">
+    <div class="mb-4 p-3 border-round shadow-1" style="background: var(--surface-ground); border: 1px solid var(--surface-border);">
+      <div class="flex justify-content-between align-items-center mb-2">
+        <span class="text-xs font-bold text-500 uppercase">Detalles de Solicitud</span>
+        <span class="text-xs font-bold px-2 py-1 border-round bg-primary-100 text-primary-700">
+          {{ solicitud.estado }}
+        </span>
+      </div>
+      <div class="text-sm font-medium text-800 overflow-hidden text-overflow-ellipsis">
+        ID: <span class="font-mono">{{ solicitud.codigo }}</span>
+      </div>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-
-      <div class="flex flex-column gap-2">
-        <label class="font-bold">Tipo de Trámite</label>
-        <p-select
-          [options]="tipos"
-          formControlName="tipoSolicitud"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Selecciona tipo (opcional)"
-          styleClass="w-full">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column">
+      
+      <div class="field flex flex-column gap-2 mb-4">
+        <label for="tipo" class="font-bold text-900">Tipo de Trámite</label>
+        <p-select 
+          id="tipo"
+          [options]="tipos" 
+          formControlName="tipoSolicitud" 
+          optionLabel="label" 
+          optionValue="value" 
+          placeholder="Selecciona tipo (opcional)" 
+          [fluid]="true">
         </p-select>
       </div>
 
-      <div class="flex flex-column gap-2">
-        <label class="font-bold">Prioridad</label>
-        <p-select
-          [options]="prioridades"
-          formControlName="prioridad"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Selecciona prioridad (opcional)"
-          styleClass="w-full">
+      <div class="field flex flex-column gap-2 mb-4">
+        <label for="prioridad" class="font-bold text-900">Prioridad</label>
+        <p-select 
+          id="prioridad"
+          [options]="prioridades" 
+          formControlName="prioridad" 
+          optionLabel="label" 
+          optionValue="value" 
+          placeholder="Selecciona prioridad (opcional)" 
+          [fluid]="true">
         </p-select>
       </div>
 
-      <div class="flex flex-column gap-2">
-        <label class="font-bold">Justificación <span class="text-red-500">*</span></label>
-        <textarea
-          pTextarea
-          formControlName="justificacion"
-          rows="3"
-          class="w-full"
-          placeholder="Mínimo 10 caracteres...">
+      <div class="field flex flex-column gap-2 mb-4">
+        <label for="justificacion" class="font-bold text-900">
+          Justificación <span class="text-red-500">*</span>
+        </label>
+        <textarea 
+          id="justificacion"
+          pTextarea 
+          formControlName="justificacion" 
+          rows="5" 
+          style="width: 100%; resize: none;"
+          class="p-inputtext p-component border-round"
+          placeholder="Escribe el motivo de la clasificación (mín. 10 caracteres)...">
         </textarea>
-        <small *ngIf="form.get('justificacion')?.invalid && form.get('justificacion')?.touched" class="text-red-500">
-          La justificación es obligatoria (mín. 10 caracteres)
+        
+        <small *ngIf="form.get('justificacion')?.invalid && form.get('justificacion')?.touched" 
+               class="text-red-500 mt-1">
+          La justificación es obligatoria (mín. 10 caracteres).
         </small>
       </div>
 
-      <div class="flex justify-content-end gap-2 mt-2">
-        <p-button
-          label="Cancelar"
-          icon="pi pi-times"
-          styleClass="p-button-outlined p-button-secondary"
-          type="button"
-          (onClick)="cerrar()">
-        </p-button>
-        <p-button
-          label="Clasificar"
-          icon="pi pi-check"
-          type="submit"
-          [loading]="enviando"
-          [disabled]="form.get('justificacion')?.invalid || enviando">
-        </p-button>
+      <div class="flex justify-content-end gap-2 mt-3 pt-3 border-top-1 border-200">
+        <p-button 
+          label="Cancelar" 
+          severity="secondary" 
+          [outlined]="true" 
+          (onClick)="cerrar()" />
+        
+        <p-button 
+          label="Clasificar" 
+          icon="pi pi-check" 
+          type="submit" 
+          [loading]="enviando" 
+          [disabled]="form.invalid || enviando" />
       </div>
 
     </form>

@@ -1,46 +1,72 @@
 <p-dialog
-  header="Atender Solicitud"
   [(visible)]="display"
   [modal]="true"
-  [style]="{ width: '450px' }"
+  [style]="{ width: '480px' }"
+  [breakpoints]="{ '960px': '95vw' }"
   (onHide)="cerrar()"
-  [draggable]="false">
-
-  <div *ngIf="solicitud">
-    <div class="mb-3 p-3 border-round" style="background: #f0f7ff; border: 1px solid #bfdbfe;">
-      <span class="text-sm text-600">Solicitud: </span>
-      <span class="text-sm font-bold">{{ solicitud.codigo | slice:0:8 }}...</span>
-      <span class="text-sm text-600 ml-3">Estado: </span>
-      <span class="text-sm font-bold">{{ solicitud.estado }}</span>
+  [draggable]="false"
+  [resizable]="false"
+  header="Gestión de Solicitud"
+  styleClass="custom-atender-dialog">
+  
+  <div *ngIf="solicitud" class="pt-2">
+    <div class="flex align-items-center p-3 border-round-xl mb-4 bg-blue-50 border-1 border-blue-100">
+      <i class="pi pi-info-circle text-blue-500 mr-3" style="font-size: 1.5rem"></i>
+      <div class="flex flex-column gap-1">
+        <span class="text-xs text-blue-700 font-medium uppercase line-height-1">Código de Solicitud</span>
+        <span class="text-sm font-bold text-blue-900">#{{ solicitud.codigo | slice:0:8 }}</span>
+      </div>
+      <div class="ml-auto flex flex-column align-items-end gap-1">
+        <span class="text-xs text-blue-700 font-medium uppercase line-height-1">Estado Actual</span>
+        <span class="text-xs font-bold px-2 py-1 border-round bg-blue-200 text-blue-800">{{ solicitud.estado }}</span>
+      </div>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-3">
-
-      <div class="flex flex-column gap-2">
-        <label class="font-bold">Observación <span class="text-red-500">*</span></label>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column">
+      
+      <div class="field flex flex-column gap-2 mb-4">
+        <label for="observacion" class="font-bold text-900 flex align-items-center">
+          <i class="pi pi-comment mr-2 text-primary"></i>
+          Observación de Atención
+          <span class="text-red-500 ml-1">*</span>
+        </label>
+        
         <textarea
-          pTextarea
+          id="observacion"
+          pInputTextarea
           formControlName="observacion"
-          rows="4"
-          class="w-full"
-          placeholder="Describe cómo fue atendida la solicitud...">
+          [autoResize]="true"
+          rows="5"
+          class="w-full border-round-lg p-3 text-sm line-height-3 transition-all transition-duration-200"
+          [ngClass]="{'ng-invalid ng-dirty': form.get('observacion')?.invalid && form.get('observacion')?.touched}"
+          placeholder="Escribe aquí los detalles de la solución brindada...">
         </textarea>
-        <small *ngIf="form.get('observacion')?.invalid && form.get('observacion')?.touched" class="text-red-500">
-          La observación es obligatoria (mín. 10 caracteres)
-        </small>
+        
+        <div class="flex justify-content-between mt-1">
+          <small class="text-red-500 flex align-items-center gap-1" *ngIf="form.get('observacion')?.invalid && form.get('observacion')?.touched">
+            <i class="pi pi-exclamation-triangle text-xs"></i>
+            Mínimo 10 caracteres requeridos.
+          </small>
+          <small class="text-500 ml-auto">
+            {{ form.get('observacion')?.value?.length || 0 }} caracteres
+          </small>
+        </div>
       </div>
 
-      <div class="flex justify-content-end gap-2 mt-2">
+      <div class="flex justify-content-end gap-3 pt-3 border-top-1 border-100">
         <p-button
           label="Cancelar"
           icon="pi pi-times"
-          styleClass="p-button-outlined p-button-secondary"
+          styleClass="p-button-text p-button-secondary border-round-lg"
           type="button"
           (onClick)="cerrar()">
         </p-button>
+        
         <p-button
           label="Marcar como Atendida"
           icon="pi pi-check-circle"
+          iconPos="right"
+          styleClass="p-button-success border-round-lg shadow-2"
           type="submit"
           [loading]="enviando"
           [disabled]="form.invalid || enviando">
