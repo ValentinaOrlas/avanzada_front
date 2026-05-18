@@ -14,7 +14,7 @@ import { Button } from 'primeng/button';
 @Component({
   selector: 'app-crear-personal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Card, Select, InputTextModule, PasswordModule, Button],
+  imports: [CommonModule, ReactiveFormsModule, Select, InputTextModule, PasswordModule, Button],
   templateUrl: './crear-personal.component.html',
   styleUrl: './crear-personal.component.css'
 })

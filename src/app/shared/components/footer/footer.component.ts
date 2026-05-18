@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   template: `
     <footer class="bg-dark text-white py-4">
       <div class="container text-center">
-        <p class="mb-1 fw-bold">Universidad del Quindío - Sistema PQRS</p>
+        <p class="mb-1 fw-bold">Universidad del Quindío - Sistema de Solicitudes Academicas</p>
         <p class="small mb-0 opacity-75">© 2026 Todos los derechos reservados.</p>
       </div>
     </footer>

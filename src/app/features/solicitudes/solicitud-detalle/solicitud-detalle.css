@@ -1,0 +1,96 @@
+.detalle-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Encabezado código + estado */
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f6ff;
+  border: 1px solid #d0e4ff;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.codigo-valor {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0056b3;
+  font-family: monospace;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* Grid de 2 columnas */
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  margin-bottom: 20px;
+}
+
+/* Campo individual */
+.detalle-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #6c757d;
+  letter-spacing: 0.6px;
+}
+
+.campo-valor {
+  font-size: 0.95rem;
+  color: #222;
+  font-weight: 500;
+}
+
+/* Caja de descripción */
+.descripcion-box {
+  background: #f8f9fa;
+  border-left: 3px solid #0056b3;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.65;
+}
+
+/* Fila de botones de acción */
+.acciones-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Caja de cierre */
+.cierre-box {
+  margin-top: 16px;
+  padding: 16px;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Mensaje info estudiante */
+.mensaje-info {
+  background: #f0f7ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  color: #444;
+}

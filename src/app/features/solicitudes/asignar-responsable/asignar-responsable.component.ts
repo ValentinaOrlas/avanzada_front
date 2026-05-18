@@ -41,7 +41,7 @@ export class AsignarResponsable implements OnInit {
         next: (res) => {
           this.responsables = res
             .filter((u: any) =>
-              (u.tipoUsuario === 'DOCENTE' || u.tipoUsuario === 'COORDINADOR') && u.activo
+              (u.tipoUsuario === 'DOCENTE' ) && u.activo
             )
             .map((u: any) => ({
               label: `${u.nombre} (${u.tipoUsuario})`,

@@ -1,27 +1,101 @@
-/* Paleta de azules personalizados */
-:root {
-    --azul-primario: #0d6efd;
-    --azul-oscuro: #0a4275;
-    --azul-fondo: #f0f4f8;
+/* ── Panel izquierdo navy ─────────────────────────────── */
+.panel-izq {
+  background: #0a2a5e;
 }
 
-.bg-custom-gradient {
-    background: linear-gradient(135deg, #0d6efd 0%, #0a4275 100%);
+.text-title {
+  color: #0a2a5e;
 }
 
-.card-custom {
-    border: none;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-    border-radius: 1rem;
+.panel-puntos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
-.form-label-custom {
-    color: var(--azul-oscuro);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+.panel-punto {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  opacity: 0.9;
 }
 
-/* Ajuste para que PrimeNG se vea bien con Bootstrap */
-::ng-deep .p-select, ::ng-deep .p-textarea {
-    width: 100% !important;
+.punto-icon {
+  color: #f5b942;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* ── Tarjeta principal ────────────────────────────────── */
+.card-solicitud {
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ── PrimeNG p-select ancho completo ─────────────────── */
+::ng-deep .p-select,
+::ng-deep .p-textarea {
+  width: 100% !important;
+}
+
+/* ── Sección pasos ────────────────────────────────────── */
+.pasos-wrapper {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.pasos-titulo {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.pasos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.paso-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #0a2a5e;
+}
+
+.paso-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0a2a5e;
+  color: #f5b942;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.paso-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.paso-desc {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.4;
 }

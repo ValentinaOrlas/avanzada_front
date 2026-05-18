@@ -1,93 +1,124 @@
 <div class="admin-container">
-  <p-card styleClass="shadow-4 border-round-xl overflow-hidden">
-    <ng-template pTemplate="header">
-      <div class="card-header-custom">
-        <i class="pi pi-user-plus"></i>
-        <span>Registrar Nuevo Personal</span>
+  <div class="form-wrapper">
+
+    <!-- Panel izquierdo: descripción -->
+    <div class="panel-info">
+      <div class="panel-info-body">
+        <i class="pi pi-shield panel-icon"></i>
+        <h2 class="panel-title">Registrar Personal</h2>
+        <p class="panel-desc">
+          Crea cuentas institucionales para administradores, coordinadores y docentes.
+          El acceso al sistema queda habilitado de inmediato según el rol asignado.
+        </p>
+        <div class="panel-points">
+          <div class="panel-point">
+            <i class="pi pi-check-circle"></i>
+            <span>Acceso inmediato con contraseña temporal</span>
+          </div>
+          <div class="panel-point">
+            <i class="pi pi-check-circle"></i>
+            <span>Permisos definidos por rol asignado</span>
+          </div>
+          <div class="panel-point">
+            <i class="pi pi-check-circle"></i>
+            <span>Gestión desde el panel de usuarios</span>
+          </div>
+        </div>
       </div>
-    </ng-template>
+    </div>
 
-    <form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="p-3">
-      <div class="grid">
-        
-        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Tipo de Documento</label>
-          <p-select
-            [options]="tiposDocumento"
-            formControlName="tipoDocumento"
-            placeholder="Selecciona tipo"
-            [fluid]="true">
-          </p-select>
+    <!-- Panel derecho: formulario -->
+    <div class="panel-form">
+
+      <div class="form-header">
+        <h3 class="form-title">Datos del Personal</h3>
+        <p class="form-subtitle">Completa todos los campos para crear la cuenta.</p>
+      </div>
+
+      <form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="form-body">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label-custom">Tipo de Documento</label>
+            <p-select
+              [options]="tiposDocumento"
+              formControlName="tipoDocumento"
+              placeholder="Selecciona tipo"
+              [fluid]="true">
+            </p-select>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Número de Identificación</label>
+            <input
+              pInputText
+              formControlName="identificacion"
+              placeholder="Ej: 1004798832"
+              class="w-full">
+          </div>
         </div>
 
-        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Número de Identificación</label>
-          <input 
-            pInputText 
-            formControlName="identificacion" 
-            placeholder="Ej: 1004798832"
-            class="w-full">
-        </div>
-
-        <div class="col-12 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Nombre Completo</label>
-          <input 
-            pInputText 
-            formControlName="nombre" 
+        <div class="form-group">
+          <label class="form-label-custom">Nombre Completo</label>
+          <input
+            pInputText
+            formControlName="nombre"
             placeholder="Ingresa el nombre completo"
             class="w-full">
         </div>
 
-        <div class="col-12 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Correo Electrónico</label>
-          <input 
-            pInputText 
+        <div class="form-group">
+          <label class="form-label-custom">Correo Electrónico</label>
+          <input
+            pInputText
             type="email"
-            formControlName="email" 
+            formControlName="email"
             placeholder="correo@uniquindio.edu.co"
             class="w-full">
         </div>
 
-        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Cargo / Rol</label>
-          <p-select
-            [options]="rolesOpciones"
-            formControlName="tipoUsuario"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Selecciona rol"
-            [fluid]="true">
-          </p-select>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label-custom">Cargo / Rol</label>
+            <p-select
+              [options]="rolesOpciones"
+              formControlName="tipoUsuario"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Selecciona rol"
+              [fluid]="true">
+            </p-select>
+          </div>
+          <div class="form-group">
+            <label class="form-label-custom">Contraseña Temporal</label>
+            <p-password
+              formControlName="password"
+              placeholder="Mínimo 6 caracteres"
+              [feedback]="false"
+              [toggleMask]="true"
+              [fluid]="true">
+            </p-password>
+          </div>
         </div>
 
-        <div class="col-12 md:col-6 flex flex-column gap-2 mb-3">
-          <label class="font-bold text-800">Contraseña Temporal</label>
-          <p-password
-            formControlName="password"
-            placeholder="Mínimo 6 caracteres"
-            [feedback]="false"
-            [toggleMask]="true"
-            [fluid]="true">
-          </p-password>
+        <div class="form-actions">
+          <p-button
+            label="Cancelar"
+            severity="secondary"
+            [outlined]="true"
+            type="button"
+            (onClick)="cancelar()">
+          </p-button>
+          <p-button
+            label="Crear Personal"
+            icon="pi pi-check"
+            [disabled]="personalForm.invalid || enviando"
+            [loading]="enviando"
+            type="submit">
+          </p-button>
         </div>
 
-      </div>
+      </form>
+    </div>
 
-      <div class="flex justify-content-end gap-3 mt-4 pt-3 border-top-1 border-200">
-        <p-button 
-          label="Cancelar" 
-          severity="secondary"
-          [outlined]="true"
-          (onClick)="cancelar()">
-        </p-button>
-        <p-button 
-          label="Crear Personal" 
-          icon="pi pi-check"
-          [disabled]="personalForm.invalid || enviando"
-          [loading]="enviando"
-          type="submit">
-        </p-button>
-      </div>
-    </form>
-  </p-card>
+  </div>
 </div>

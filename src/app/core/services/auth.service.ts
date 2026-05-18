@@ -25,6 +25,18 @@ export class AuthService {
         const payload = JSON.parse(atob(response.token.split('.')[1]));
         localStorage.setItem('identificacion', payload.sub);
 
+        // Guardar el email: buscar en claims JWT, luego en la respuesta.
+        // En Spring Security el sub suele ser el email institucional cuando
+        // getUsername() devuelve email. Lo usamos como último recurso.
+        const emailCandidate =
+          payload.email    ||
+          payload.correo   ||
+          payload.mail     ||
+          response.email   ||
+          (typeof payload.sub === 'string' && payload.sub.includes('@') ? payload.sub : '');
+
+        if (emailCandidate) localStorage.setItem('email', emailCandidate);
+
         // ACTUALIZAMOS EL SIGNAL (Esto avisará al Navbar automáticamente)
         this.currentUser.set({
           nombre: response.nombre,

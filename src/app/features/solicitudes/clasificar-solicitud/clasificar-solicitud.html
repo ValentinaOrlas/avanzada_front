@@ -8,15 +8,39 @@
   [resizable]="false">
 
   <div *ngIf="solicitud" class="p-2">
-    <div class="mb-4 p-3 border-round shadow-1" style="background: var(--surface-ground); border: 1px solid var(--surface-border);">
+
+    <!-- Info de la solicitud -->
+    <div class="mb-3 p-3 border-round shadow-1" 
+         style="background: var(--surface-ground); border: 1px solid var(--surface-border);">
       <div class="flex justify-content-between align-items-center mb-2">
         <span class="text-xs font-bold text-500 uppercase">Detalles de Solicitud</span>
         <span class="text-xs font-bold px-2 py-1 border-round bg-primary-100 text-primary-700">
           {{ solicitud.estado }}
         </span>
       </div>
-      <div class="text-sm font-medium text-800 overflow-hidden text-overflow-ellipsis">
+      <div class="text-sm font-medium text-800">
         ID: <span class="font-mono">{{ solicitud.codigo }}</span>
+      </div>
+    </div>
+
+    <!-- Botón sugerir con IA -->
+    <div class="mb-4">
+      <p-button 
+        label="Sugerir tipo y prioridad con IA"
+        icon="pi pi-sparkles"
+        severity="help"
+        [outlined]="true"
+        [loading]="sugiriendo"
+        [fluid]="true"
+        (onClick)="sugerirConIA()">
+      </p-button>
+
+      <!-- Badge cuando ya se aplicó sugerencia -->
+      <div *ngIf="sugerenciaAplicada" 
+           class="mt-2 p-2 border-round flex align-items-center gap-2"
+           style="background-color: #f0f0ff; border: 1px solid #c7c7ff; font-size: 0.82rem; color: #4f46e5;">
+        <i class="pi pi-check-circle"></i>
+        <span>Sugerencia de IA aplicada — puedes ajustar los valores.</span>
       </div>
     </div>
 
@@ -61,7 +85,6 @@
           class="p-inputtext p-component border-round"
           placeholder="Escribe el motivo de la clasificación (mín. 10 caracteres)...">
         </textarea>
-        
         <small *ngIf="form.get('justificacion')?.invalid && form.get('justificacion')?.touched" 
                class="text-red-500 mt-1">
           La justificación es obligatoria (mín. 10 caracteres).
@@ -69,18 +92,8 @@
       </div>
 
       <div class="flex justify-content-end gap-2 mt-3 pt-3 border-top-1 border-200">
-        <p-button 
-          label="Cancelar" 
-          severity="secondary" 
-          [outlined]="true" 
-          (onClick)="cerrar()" />
-        
-        <p-button 
-          label="Clasificar" 
-          icon="pi pi-check" 
-          type="submit" 
-          [loading]="enviando" 
-          [disabled]="form.invalid || enviando" />
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="cerrar()" />
+        <p-button label="Clasificar" icon="pi pi-check" type="submit" [loading]="enviando" [disabled]="form.invalid || enviando" />
       </div>
 
     </form>

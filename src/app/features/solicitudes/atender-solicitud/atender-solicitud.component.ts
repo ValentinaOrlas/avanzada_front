@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -36,6 +36,7 @@ import Swal from 'sweetalert2';
 export class AtenderSolicitud {
   private fb = inject(FormBuilder);
   private solicitudService = inject(SolicitudService);
+    private cdr = inject(ChangeDetectorRef); 
 
   @Input() display: boolean = false;
   @Input() solicitud: any = null;
@@ -56,6 +57,10 @@ export class AtenderSolicitud {
   onSubmit() {
     if (this.form.invalid || this.enviando) return;
 
+       console.log('Solicitud completa:', this.solicitud);
+    console.log('ID usado:', this.solicitud.codigo);
+    console.log('Estado:', this.solicitud.estado);
+
     this.enviando = true;
     const payload = { observacion: this.form.get('observacion')?.value };
 
@@ -68,11 +73,14 @@ export class AtenderSolicitud {
           confirmButtonColor: '#22c55e'
         });
         this.form.reset();
+        this.enviando = false;      
+        this.cdr.detectChanges();
         this.onUpdate.emit();
         this.onClose.emit();
       },
       error: (err) => {
         this.enviando = false;
+        this.cdr.detectChanges(); 
         Swal.fire('Error', err.error?.mensaje || 'No se pudo procesar la solicitud', 'error');
       }
     });

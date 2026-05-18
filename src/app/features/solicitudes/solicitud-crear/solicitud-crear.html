@@ -1,26 +1,41 @@
 <div class="container py-5">
-  
+
   <div class="card card-solicitud overflow-hidden mb-5">
     <div class="row g-0">
-      
-      <div class="col-lg-4 bg-dental-blue p-5 text-white d-none d-lg-flex flex-column justify-content-center">
-        <i class="pi pi-shield mb-4" style="font-size: 3rem"></i>
-        <h2 class="fw-bold">Gestión de Salud</h2>
-        <p class="opacity-75">Registre su solicitud detalladamente. Nuestro sistema de IA le ayudará a categorizar su trámite de forma automática.</p>
-        <div class="mt-4">
-            <small class="d-block mb-2"><i class="pi pi-check-circle me-2"></i> Procesamiento seguro</small>
-            <small class="d-block"><i class="pi pi-clock me-2"></i> Respuesta en menos de 24h</small>
+
+      <!-- Panel izquierdo navy -->
+      <div class="col-lg-4 panel-izq p-5 text-white d-none d-lg-flex flex-column justify-content-center">
+        <i class="pi pi-shield mb-4" style="font-size: 3rem; color: #f5b942;"></i>
+        <h2 class="fw-bold mb-3">Gestión de Salud</h2>
+        <p class="opacity-75 mb-4">
+          Registra tu solicitud con detalle y nuestro sistema de IA te ayudará a
+          categorizarla de forma automática.
+        </p>
+        <div class="panel-puntos">
+          <div class="panel-punto">
+            <i class="pi pi-check-circle punto-icon"></i>
+            <span>Procesamiento seguro</span>
+          </div>
+          <div class="panel-punto">
+            <i class="pi pi-sparkles punto-icon"></i>
+            <span>Clasificación asistida por IA</span>
+          </div>
+          <div class="panel-punto">
+            <i class="pi pi-clock punto-icon"></i>
+            <span>Respuestas Eficaces</span>
+          </div>
         </div>
       </div>
 
+      <!-- Panel derecho: formulario + pasos -->
       <div class="col-lg-8 p-4 p-md-5 bg-white">
-        <div class="d-flex align-items-center mb-4">
-            <h3 class="fw-bold text-dental-blue m-0">Crear Nueva Solicitud</h3>
-        </div>
-        
+
+        <h3 class="fw-bold text-title mb-1">Crear Nueva Solicitud</h3>
+        <p class="text-muted small mb-4">Completa los campos y envía tu trámite.</p>
+
         <form [formGroup]="solicitudForm" (ngSubmit)="onSubmit()" class="row g-3">
-          
-          <div class="col-12 mb-3">
+
+          <div class="col-12">
             <label class="form-label fw-semibold text-secondary">Tipo de Trámite</label>
             <p-select
               [options]="tipos"
@@ -32,8 +47,11 @@
             </p-select>
           </div>
 
-          <div class="col-12 mb-3">
-            <label class="form-label fw-semibold text-secondary">Descripción (Mínimo 20 caracteres)</label>
+          <div class="col-12">
+            <label class="form-label fw-semibold text-secondary">
+              Descripción
+              <span class="text-muted fw-normal small ms-1">(mínimo 20 caracteres)</span>
+            </label>
             <textarea
               pTextarea
               formControlName="descripcion"
@@ -53,13 +71,15 @@
                 (onClick)="sugerirTramite()">
               </p-button>
 
-              <span *ngIf="sugerencia" class="badge bg-info-subtle text-primary border border-info-subtle p-2">
-                <i class="pi pi-lightbulb me-1"></i> Sugerencia: {{ sugerencia }}
-              </span>
+              @if (sugerencia) {
+                <span class="badge bg-info-subtle text-primary border border-info-subtle p-2">
+                  <i class="pi pi-lightbulb me-1"></i> Sugerencia: {{ sugerencia }}
+                </span>
+              }
             </div>
           </div>
 
-          <div class="col-12 text-end mt-4">
+          <div class="col-12 text-end mt-2">
             <p-button
               label="Enviar Solicitud"
               icon="pi pi-check"
@@ -71,9 +91,51 @@
           </div>
 
         </form>
+
+        <!-- ── Proceso en pasos ── -->
+        <div class="pasos-wrapper">
+          <p class="pasos-titulo">
+            <i class="pi pi-list-check me-1"></i>¿Cómo funciona el proceso?
+          </p>
+          <div class="pasos-grid">
+
+            <div class="paso-item">
+              <div class="paso-num">1</div>
+              <div>
+                <div class="paso-label">Registras</div>
+                <div class="paso-desc">Describes tu situación con detalle en el formulario.</div>
+              </div>
+            </div>
+
+            <div class="paso-item">
+              <div class="paso-num">2</div>
+              <div>
+                <div class="paso-label">Clasificamos</div>
+                <div class="paso-desc">Se categoriza tu trámite automáticamente.</div>
+              </div>
+            </div>
+
+            <div class="paso-item">
+              <div class="paso-num">3</div>
+              <div>
+                <div class="paso-label">Asignamos</div>
+                <div class="paso-desc">Un responsable queda a cargo de tu caso.</div>
+              </div>
+            </div>
+
+            <div class="paso-item">
+              <div class="paso-num">4</div>
+              <div>
+                <div class="paso-label">Resolvemos</div>
+                <div class="paso-desc">Recibes respuesta y seguimiento en tiempo real.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-
 
 </div>

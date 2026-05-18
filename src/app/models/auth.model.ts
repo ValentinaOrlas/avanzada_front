@@ -9,4 +9,5 @@ export interface TokenResponse {
   token: string;
   tipoUsuario: string;
   nombre: string;
+  email?: string;
 }

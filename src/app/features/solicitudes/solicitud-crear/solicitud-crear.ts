@@ -15,7 +15,8 @@ import { TableModule } from 'primeng/table';
   selector: 'app-solicitud-crear',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, Select, Textarea, Button, TableModule],
-  templateUrl: './solicitud-crear.html'
+  templateUrl: './solicitud-crear.html',
+  styleUrl: './solicitud-crear.css'
 })
 export class SolicitudCrear implements OnInit {
   private fb = inject(FormBuilder);
@@ -92,7 +93,10 @@ export class SolicitudCrear implements OnInit {
   onSubmit(): void {
     if (this.solicitudForm.valid && !this.enviando) {
       this.enviando = true;
-      const payload = this.solicitudForm.getRawValue();
+      const payload = {
+        ...this.solicitudForm.getRawValue(),
+        email: localStorage.getItem('email') || ''
+      };
 
       this.solicitudService.crearSolicitud(payload).subscribe({
         next: () => {

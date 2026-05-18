@@ -1,13 +1,12 @@
 <div class="container py-4">
 
-  <!-- ── VISTA ESTUDIANTE ── -->
   <ng-container *ngIf="esEstudiante">
     <div class="row mb-4">
       <div class="col-12">
         <h4 class="text-muted mb-3">
           <i class="pi pi-plus-circle"></i> Nueva Solicitud
         </h4>
-        <app-solicitud-crear (solicitudCreada)="refrescarHistorial()"></app-solicitud-crear>
+        <app-solicitud-crear (solicitudCreada)="refrescarListaSolicitudes()"></app-solicitud-crear>
       </div>
     </div>
     <div class="row">
@@ -19,7 +18,6 @@
     </div>
   </ng-container>
 
-  <!-- ── VISTA ADMIN / COORDINADOR / DOCENTE ── -->
   <ng-container *ngIf="!esEstudiante">
     <div class="dashboard-header mb-4">
       <div class="header-info">
@@ -38,24 +36,22 @@
     </div>
   </ng-container>
 
-  <!-- LISTA ÚNICA — modoAdmin según el rol -->
-  <!-- LISTA ÚNICA — modoAdmin según el rol -->
-<div class="row">
-  <div class="col-12">
-    <app-solicitud-lista
-      #listaComponent
-      [modoAdmin]="esAdmin || esCoordinador"
-      (onVerDetalle)="verDetalleEnModal($event)">
-    </app-solicitud-lista>
+  <div class="row">
+    <div class="col-12">
+      <app-solicitud-lista
+        #listaComponent
+        [modoAdmin]="esAdmin || esCoordinador"
+        (onVerDetalle)="verDetalleEnModal($event)">
+      </app-solicitud-lista>
+    </div>
   </div>
-</div>
 
 </div>
 
-<!-- MODAL DETALLE -->
 <app-solicitud-detalle
   [display]="mostrarModal"
   [solicitud]="solicitudSeleccionada"
+  [historial]="historialSeleccionado"
   (onClose)="mostrarModal = false"
-  (onUpdate)="refrescarHistorial()">
+  (onUpdate)="refrescarListaSolicitudes()">
 </app-solicitud-detalle>

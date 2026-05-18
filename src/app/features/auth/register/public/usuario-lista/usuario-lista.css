@@ -1,9 +1,51 @@
 .lista-container {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
+/* ── Stats bar ─────────────────────────────────────────── */
+.stats-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.85rem 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  min-width: 140px;
+}
+
+.stat-icon-base  { font-size: 1.5rem; color: #0056b3; }
+.stat-icon-green { font-size: 1.5rem; color: #22c55e; }
+.stat-icon-gray  { font-size: 1.5rem; color: #9ca3af; }
+
+.stat-num {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0a2a5e;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* ── Card header ───────────────────────────────────────── */
 .card-header-custom {
   background: #0a2a5e;
   color: white;
@@ -18,11 +60,59 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .header-left i {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #f5b942;
+}
+
+/* Botón dorado dentro del header */
+:host ::ng-deep .header-btn.p-button {
+  background-color: #f5b942 !important;
+  border-color:     #f5b942 !important;
+  color:            #0a2a5e !important;
+  font-weight: 700  !important;
+}
+
+:host ::ng-deep .header-btn.p-button:hover {
+  background-color: #e0a830 !important;
+  border-color:     #e0a830 !important;
+}
+
+/* ── Avatar ─────────────────────────────────────────────  */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ── Nombre ─────────────────────────────────────────────  */
+.user-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ── Empty state ────────────────────────────────────────  */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #9ca3af;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  opacity: 0.35;
 }

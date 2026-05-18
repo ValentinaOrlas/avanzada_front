@@ -1,4 +1,29 @@
 <div class="lista-container">
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <i class="pi pi-users stat-icon-base"></i>
+      <div>
+        <span class="stat-num">{{ usuarios.length }}</span>
+        <span class="stat-label">Total usuarios</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <i class="pi pi-check-circle stat-icon-green"></i>
+      <div>
+        <span class="stat-num">{{ totalActivos }}</span>
+        <span class="stat-label">Activos</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <i class="pi pi-minus-circle stat-icon-gray"></i>
+      <div>
+        <span class="stat-num">{{ totalInactivos }}</span>
+        <span class="stat-label">Inactivos</span>
+      </div>
+    </div>
+  </div>
+
   <p-card>
     <ng-template pTemplate="header">
       <div class="card-header-custom">
@@ -6,12 +31,14 @@
           <i class="pi pi-users"></i>
           <span>Gestión de Usuarios</span>
         </div>
-        <p-button
-          label="Nuevo Personal"
-          icon="pi pi-user-plus"
-          styleClass="p-button-sm"
-          (onClick)="irACrearPersonal()">
-        </p-button>
+        @if (esAdmin) {
+          <p-button
+            label="Nuevo Personal"
+            icon="pi pi-user-plus"
+            styleClass="p-button-sm header-btn"
+            (onClick)="irACrearPersonal()">
+          </p-button>
+        }
       </div>
     </ng-template>
 
@@ -21,27 +48,37 @@
       [paginator]="true"
       [loading]="cargando"
       responsiveLayout="scroll"
-      styleClass="p-datatable-sm p-datatable-striped">
+      styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
       <ng-template pTemplate="header">
         <tr>
+          <th style="width: 52px"></th>
           <th>Nombre</th>
           <th>Identificación</th>
-          <th>Email</th>
+          <th>Correo</th>
           <th>Rol</th>
           <th>Estado</th>
-          <th style="width: 100px">Acción</th>
+          @if (esAdmin) {
+            <th style="width: 90px" class="text-center">Acción</th>
+          }
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-u>
         <tr>
-          <td class="font-bold">{{ u.nombre }}</td>
-          <td class="text-500 text-sm">{{ u.identificacion }}</td>
-          <td class="text-sm">{{ u.email }}</td>
+          <td>
+            <div class="user-avatar" [style.background]="getAvatarColor(u.tipoUsuario)">
+              {{ getInitials(u.nombre) }}
+            </div>
+          </td>
+          <td>
+            <span class="user-name">{{ u.nombre }}</span>
+          </td>
+          <td class="text-sm text-secondary">{{ u.identificacion }}</td>
+          <td class="text-sm text-secondary">{{ u.email }}</td>
           <td>
             <p-tag
-              [value]="u.tipoUsuario"
+              [value]="formatRol(u.tipoUsuario)"
               [severity]="getRolSeverity(u.tipoUsuario)">
             </p-tag>
           </td>
@@ -51,27 +88,36 @@
               [severity]="u.activo ? 'success' : 'secondary'">
             </p-tag>
           </td>
-          <td>
-            <p-button
-              *ngIf="u.activo"
-              icon="pi pi-ban"
-              styleClass="p-button-text p-button-rounded p-button-danger"
-              pTooltip="Desactivar usuario"
-              (onClick)="desactivar(u)">
-            </p-button>
-            <span *ngIf="!u.activo" class="text-500 text-sm">—</span>
-          </td>
+          @if (esAdmin) {
+            <td class="text-center">
+              @if (u.activo) {
+                <p-button
+                  icon="pi pi-ban"
+                  styleClass="p-button-text p-button-rounded p-button-danger"
+                  pTooltip="Desactivar usuario"
+                  tooltipPosition="left"
+                  (onClick)="desactivar(u)">
+                </p-button>
+              } @else {
+                <span class="text-secondary text-sm">—</span>
+              }
+            </td>
+          }
         </tr>
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6" class="text-center p-4 text-500">
-            No hay usuarios registrados.
+          <td colspan="7">
+            <div class="empty-state">
+              <i class="pi pi-users empty-icon"></i>
+              <p class="mb-0">No hay usuarios registrados.</p>
+            </div>
           </td>
         </tr>
       </ng-template>
 
     </p-table>
   </p-card>
+
 </div>
